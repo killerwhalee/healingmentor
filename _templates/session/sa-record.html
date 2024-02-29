@@ -19,9 +19,10 @@
 							orient="vertical"
 						/>
 					</div>
-					<div class="d-flex justify-content-around my-3">
+
+					<div class="d-flex justify-content-around my-3 w-100">
 						<button
-							class="btn btn-primary"
+							class="btn btn-primary w-50 mx-1"
 							id="startStopButton"
 						>
 							Start
@@ -29,11 +30,12 @@
 
 						<a
 							role="button"
-							href="{% url 'session:sa-inquiry' user.username %}"
-							class="btn btn-secondary"
+							href="{% url 'session:sa-inquiry' %}"
+							class="btn btn-secondary w-50 mx-1"
 							>Recordings</a
 						>
 					</div>
+
 					<div class="d-flex justify-content-center">
 						<h4 id="stopwatch">0.00</h4>
 					</div>
@@ -184,8 +186,8 @@
 		</div>
 		<!-- /Result Modal -->
 	</div>
-	{% endblock contents %} {% block scripts %}
-	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-	<script src="/static/js/session/sa-record.js"></script>
-	{% endblock %}
 </div>
+{% endblock contents %} {% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/static/js/session/sa-record.js"></script>
+{% endblock %}
