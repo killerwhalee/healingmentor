@@ -1,6 +1,29 @@
 {% extends "_base.html" %} {% block contents %}
 <div class="row row-cols-1 g-3">
 	<div class="col">
+		<a href="{% url 'session:gm-record' %}">
+			<div class="card rounded-3 mb-0">
+				<div class="card-body">
+					<div
+						class="d-flex flex-row align-items-center justify-content-between gap-2"
+					>
+						<div class="category-name">
+							<h6 class="mb-0 fw-bold text-dark fs-5">Guided Meditation</h6>
+						</div>
+						<div class="category-img">
+							<img
+								src="https://via.placeholder.com/551X551"
+								class="img-fluid"
+								width="100"
+								alt=""
+							/>
+						</div>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+	<div class="col">
 		<a href="{% url 'session:rg-record' %}">
 			<div class="card rounded-3 mb-0">
 				<div class="card-body">

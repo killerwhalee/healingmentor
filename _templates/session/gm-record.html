@@ -1,0 +1,288 @@
+{% extends "_base.html" %}{% block contents %}
+<h2 class="mb-3">Guided Meditation</h2>
+
+<div class="card rounded-3 mb-3">
+	<div class="card-header">
+    Working skeleton
+  </div>
+	<div class="card-body">
+		<audio controls>
+			<source
+				src="/static/sounds/lecture/lecture-1.mp3"
+				type="audio/mpeg"
+			/>
+			Audio is not supported in your browser.
+		</audio>
+		<div class="block">
+			<a
+				class="btn btn-primary btn-sm"
+				data-bs-toggle="modal"
+				href="#modal-report-1"
+				role="button"
+				>Write meditation report!</a
+			>
+		</div>
+	</div>
+</div>
+
+<div class="card rounded-3 mb-3">
+	<div class="card-header">
+    UI prototype
+  </div>
+	<div class="card-body">
+		<div class="input-group">
+			<select
+				class="form-select"
+				placeholder="Recipient's username"
+				aria-label="Recipient's username"
+				aria-describedby="button-addon2"
+			>
+				<option selected>Select Lecture to Listen</option>
+				<option value="1">Lecture 1</option>
+				<option value="2">Lecture 2</option>
+				<option value="3">Lecture 3</option>
+			</select>
+			<button
+				class="btn btn-outline-secondary"
+				type="button"
+				id="button-addon2"
+			>
+				Play
+			</button>
+		</div>
+	</div>
+</div>
+
+<!-- Survey Modal -->
+<form
+	id="survey-form"
+	method="POST"
+>
+	{% csrf_token %}
+	<div
+		class="modal fade"
+		id="modal-report-1"
+		data-bs-backdrop="static"
+		data-bs-keyboard="false"
+		tabindex="-1"
+		aria-labelledby="modal-result-label"
+		aria-hidden="true"
+	>
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1
+						class="modal-title fs-5"
+						id="modal-result-label"
+					>
+						Meditation Report
+					</h1>
+					<button
+						type="button"
+						class="btn-close"
+						data-bs-dismiss="modal"
+						aria-label="Close"
+					></button>
+				</div>
+				<div class="modal-body">
+					<h5 class="fw-bold mb-3">How you feel after meditation?</h5>
+					<textarea
+						class="form-control"
+						name="feeling"
+						rows="10"
+					></textarea>
+				</div>
+				<div class="modal-footer">
+					<button
+						type="button"
+						class="btn btn-secondary"
+						data-bs-target="#modal-report-0"
+						data-bs-toggle="modal"
+					>
+						Previous
+					</button>
+					<button
+						type="button"
+						class="btn btn-primary"
+						data-bs-target="#modal-report-2"
+						data-bs-toggle="modal"
+					>
+						Next
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div
+		class="modal fade"
+		id="modal-report-2"
+		data-bs-backdrop="static"
+		data-bs-keyboard="false"
+		tabindex="-1"
+		aria-labelledby="modal-result-label"
+		aria-hidden="true"
+	>
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1
+						class="modal-title fs-5"
+						id="modal-result-label"
+					>
+						Meditation Report
+					</h1>
+					<button
+						type="button"
+						class="btn-close"
+						data-bs-dismiss="modal"
+						aria-label="Close"
+					></button>
+				</div>
+				<div class="modal-body">
+					<h5 class="fw-bold mb-3">How do you feel in your body?</h5>
+					<textarea
+						class="form-control"
+						name="feeling_body"
+						rows="10"
+					></textarea>
+				</div>
+				<div class="modal-footer">
+					<button
+						type="button"
+						class="btn btn-secondary"
+						data-bs-target="#modal-report-1"
+						data-bs-toggle="modal"
+					>
+						Previous
+					</button>
+					<button
+						type="button"
+						class="btn btn-primary"
+						data-bs-target="#modal-report-3"
+						data-bs-toggle="modal"
+					>
+						Next
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div
+		class="modal fade"
+		id="modal-report-3"
+		data-bs-backdrop="static"
+		data-bs-keyboard="false"
+		tabindex="-1"
+		aria-labelledby="modal-result-label"
+		aria-hidden="true"
+	>
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1
+						class="modal-title fs-5"
+						id="modal-result-label"
+					>
+						Meditation Report
+					</h1>
+					<button
+						type="button"
+						class="btn-close"
+						data-bs-dismiss="modal"
+						aria-label="Close"
+					></button>
+				</div>
+				<div class="modal-body">
+					<h5 class="fw-bold mb-3">
+						Where, and how you feel <br />your breathing?
+					</h5>
+					<textarea
+						class="form-control"
+						name="feeling_breathe"
+						rows="10"
+					></textarea>
+				</div>
+				<div class="modal-footer">
+					<button
+						type="button"
+						class="btn btn-secondary"
+						data-bs-target="#modal-report-2"
+						data-bs-toggle="modal"
+					>
+						Previous
+					</button>
+					<button
+						type="button"
+						class="btn btn-primary"
+						data-bs-target="#modal-report-4"
+						data-bs-toggle="modal"
+					>
+						Next
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div
+		class="modal fade"
+		id="modal-report-4"
+		data-bs-backdrop="static"
+		data-bs-keyboard="false"
+		tabindex="-1"
+		aria-labelledby="modal-result-label"
+		aria-hidden="true"
+	>
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1
+						class="modal-title fs-5"
+						id="modal-result-label"
+					>
+						Meditation Report
+					</h1>
+					<button
+						type="button"
+						class="btn-close"
+						data-bs-dismiss="modal"
+						aria-label="Close"
+					></button>
+				</div>
+				<div class="modal-body">
+					<h5 class="fw-bold mb-3">
+						How you feel now,<br />
+						after you write all this report?
+					</h5>
+					<textarea
+						class="form-control"
+						name="feeling_breathe"
+						rows="10"
+					></textarea>
+				</div>
+				<div class="modal-footer">
+					<button
+						type="button"
+						class="btn btn-secondary"
+						data-bs-target="#modal-report-3"
+						data-bs-toggle="modal"
+					>
+						Previous
+					</button>
+					<button
+						type="button"
+						class="btn btn-primary"
+						data-bs-target="#modal-report-5"
+						data-bs-toggle="modal"
+					>
+						Next
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+<!-- /Survey Modal -->
+{% endblock contents %}
