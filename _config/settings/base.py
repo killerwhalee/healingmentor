@@ -53,7 +53,6 @@ INSTALLED_APPS = [
     # Applications
     "home.apps.HomeConfig",
     "session.apps.SessionConfig",
-    "board.apps.BoardConfig",
 ]
 
 MIDDLEWARE = [
