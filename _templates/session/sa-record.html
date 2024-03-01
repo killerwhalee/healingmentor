@@ -4,7 +4,56 @@
 	href="/static/css/session/sa-record.css"
 />
 {% endblock statics %} {% block contents %}
-<h2 class="mb-3">Sustained Attention</h2>
+<h2 class="mb-3">
+	Sustained Attention
+	<a
+		data-bs-toggle="modal"
+		href="#modal-help"
+		><i
+			class="bi bi-question-circle"
+			style="font-size: 1rem"
+		></i
+	></a>
+</h2>
+
+<!-- Help Modal -->
+<div
+	class="modal fade"
+	id="modal-help"
+	tabindex="-1"
+	aria-labelledby="exampleModalLabel"
+	aria-hidden="true"
+>
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1
+					class="modal-title fs-5"
+					id="exampleModalLabel"
+				>
+					Instructions
+				</h1>
+				<button
+					type="button"
+					class="btn-close"
+					data-bs-dismiss="modal"
+					aria-label="Close"
+				></button>
+			</div>
+			<div class="modal-body">...</div>
+			<div class="modal-footer">
+				<button
+					type="button"
+					class="btn btn-secondary"
+					data-bs-dismiss="modal"
+				>
+					Close
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <div class="card rounded-3 mb-0">
 	<div class="card-body">
 		<div class="d-flex flex-row align-items-center justify-content-center">
