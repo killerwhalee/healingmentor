@@ -6,7 +6,7 @@
 	<div class="offcanvas-header bg-dark border-bottom border-light">
 		{% if user.is_authenticated %}
 		<div class="hstack gap-3">
-			<div class="">
+			<div>
 				<img
 					src="{{user.userprofile.image}}"
 					width="45"
@@ -29,7 +29,9 @@
 				/>
 			</div>
 			<div class="details">
-				<h6 class="mb-0 text-white">Login First</h6>
+				<a href="{% url 'common:login' %}">
+					<h6 class="mb-0 text-white">Login First</h6>
+				</a>
 			</div>
 		</div>
 		{% endif %}
