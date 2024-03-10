@@ -222,6 +222,7 @@ def sa_record(request):
 
 
 @login_required(login_url="common:login")
+
 def sa_inquiry(request):
     # Initial variable settings
     data_list = []
