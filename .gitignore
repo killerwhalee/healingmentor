@@ -1,26 +1,22 @@
-### Python ###
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
-
-
-### Django ###
-# System Data
-*.log
 *.pot
-*.pyc
-base-*.py
-__pycache__/
-migrations/
 
-# Environment Value
+# Confidential settings
+*/settings/*
+!*/settings/base.py
+
+# Private folder
+_logs/
+_media/
+_static/admin
+
+# Environment value
 .venv/
 .env
+
+# Databases
+*/migrations/*
+!*/migrations/__init__.py
 db.sqlite3
-
-# Private Files
-_media/
-_static/admin/
-
-# Unused Files
-*_legacy/

@@ -6,7 +6,7 @@
 	<div class="offcanvas-header bg-dark border-bottom border-light">
 		{% if user.is_authenticated %}
 		<div class="hstack gap-3">
-			<div class="">
+			<div>
 				<img
 					src="{{user.userprofile.image}}"
 					width="45"
@@ -22,14 +22,16 @@
 		<div class="hstack gap-3">
 			<div class="">
 				<img
-					src="https://via.placeholder.com/110"
+					src="/static/images/profile-default.png"
 					width="45"
 					class="rounded-3 p-1 bg-white"
 					alt=""
 				/>
 			</div>
 			<div class="details">
-				<h6 class="mb-0 text-white">Login First</h6>
+				<a href="{% url 'common:login' %}">
+					<h6 class="mb-0 text-white">Login First</h6>
+				</a>
 			</div>
 		</div>
 		{% endif %}
@@ -74,7 +76,9 @@
 						<li>
 							<a href="{% url 'session:rg-record' %}">Respiratory Graph</a>
 						</li>
-						<li><a href="javascript:;">Sustained Attention</a></li>
+						<li>
+							<a href="{% url 'session:sa-record' %}">Sustained Attention</a>
+						</li>
 					</ul>
 				</li>
 				<li>

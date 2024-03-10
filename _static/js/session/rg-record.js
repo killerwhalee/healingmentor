@@ -48,7 +48,7 @@ startStopButton.addEventListener("click", () => {
 
         // Clear interval
         clearInterval(stopwatchInterval);
-        startStopButton.innerText = "Start Recording";
+        startStopButton.innerText = "Start";
         saveButton.disabled = false;
 
         var myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'));
@@ -75,7 +75,7 @@ startStopButton.addEventListener("click", () => {
             recordedData.push([time, value]);
         }, 50);
 
-        startStopButton.innerText = "Stop Recording";
+        startStopButton.innerText = "Stop";
         saveButton.disabled = true;
 
         if (modalChart) {

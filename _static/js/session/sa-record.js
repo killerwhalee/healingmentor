@@ -63,7 +63,7 @@ startStopButton.addEventListener("click", () => {
 
         // Clear interval
         clearInterval(stopwatchInterval);
-        startStopButton.innerText = "Start Recording";
+        startStopButton.innerText = "Start";
         saveButton.disabled = false;
 
         // Show modal
@@ -106,7 +106,7 @@ startStopButton.addEventListener("click", () => {
             }
         }, 50);
 
-        startStopButton.innerText = "Stop Recording";
+        startStopButton.innerText = "Stop";
         saveButton.disabled = true;
 
         if (modalChart) {

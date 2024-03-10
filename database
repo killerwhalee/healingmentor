@@ -1,4 +1,4 @@
-if [ "$#" -ne 1 ]; then
+if [ "$#" -ne 2 ]; then
     echo "Usage: $0 [flush | rebuild | refresh]"
     exit 1
 fi
@@ -8,13 +8,13 @@ case "$1" in
         rm -rv ./*/migrations/0*.py ./*/__pycache__ db.sqlite3
         ;;
     "rebuild")
-        sh database flush
-        sh database refresh
-        python manage.py createsuperuser --settings=_config.settings.base-dev
+        sh database flush $2
+        sh database refresh $2
+        python manage.py createsuperuser --settings=_config.settings.$2
         ;;
     "refresh")
-        python manage.py makemigrations --settings=_config.settings.base-dev
-        python manage.py migrate --settings=_config.settings.base-dev
+        python manage.py makemigrations --settings=_config.settings.$2
+        python manage.py migrate --settings=_config.settings.$2
         ;;
     *)
         echo "Unknown parameter: $1"
