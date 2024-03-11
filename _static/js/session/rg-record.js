@@ -51,7 +51,7 @@ startStopButton.addEventListener("click", () => {
         startStopButton.innerText = "Start";
         saveButton.disabled = false;
 
-        var myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'));
+        var myModal = new bootstrap.Modal(document.getElementById('modal-result-0'));
         plotModal();
         myModal.show();
     } else {
