@@ -27,7 +27,7 @@ const timeInput = document.getElementById("timeInput");
 const rateInput = document.getElementById("rateInput");
 
 // Modals
-let resultModal = new bootstrap.Modal(document.getElementById('modal-result'));
+let resultModal = new bootstrap.Modal(document.getElementById('modal-result-0'));
 let rateModal = new bootstrap.Modal(document.getElementById('modal-rate'));
 
 // Audio effects
@@ -155,7 +155,7 @@ discardButton.addEventListener("click", () => {
 /**
  * Draw chart for result modal
  */
-let modalChart;
+var modalChart;
 
 function plotModal() {
     // Take input from html
