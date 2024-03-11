@@ -231,10 +231,10 @@ def sa_inquiry(request):
 
     # Load all data if user is staff
     if request.user.is_staff:
-        raw_data_list = RespiratoryGraphData.objects.all().order_by("-date_created")
+        raw_data_list = SustainedAttentionData.objects.all().order_by("-date_created")
     # If not, load user data only
     else:
-        raw_data_list = RespiratoryGraphData.objects.filter(user=request.user).order_by(
+        raw_data_list = SustainedAttentionData.objects.filter(user=request.user).order_by(
             "-date_created"
         )
 

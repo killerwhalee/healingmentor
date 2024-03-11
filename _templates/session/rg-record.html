@@ -80,7 +80,7 @@
 
 					<a
 						role="button"
-						href="{% url 'session:sa-inquiry' %}"
+						href="{% url 'session:rg-inquiry' %}"
 						class="btn btn-secondary w-50 mx-1"
 						>Recordings</a
 					>
@@ -124,7 +124,7 @@
 						></button>
 					</div>
 					<div class="modal-body">
-						<p class="fw-bold mt-2">Respiration Chart</p>
+						<h5 class="fw-bold mt-2">Respiration Chart</h5>
 						<div class="w-auto h-auto">
 							<canvas
 								class="col-1"
@@ -373,9 +373,9 @@
 						</button>
 						<button
 							type="submit"
-							class="btn btn-primary"
+							class="btn btn-success"
 							id="saveButton"
-							form="csv-form"
+							form="result-form"
 							disabled="true"
 						>
 							Save
@@ -385,6 +385,7 @@
 			</div>
 		</div>
 	</form>
+	<!-- /Result Modal -->
 </div>
 {% endblock contents %} {% block scripts %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
