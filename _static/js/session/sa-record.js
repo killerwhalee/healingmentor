@@ -27,7 +27,7 @@ const timeInput = document.getElementById("timeInput");
 const rateInput = document.getElementById("rateInput");
 
 // Modals
-let resultModal = new bootstrap.Modal(document.getElementById('modal-result-0'));
+let resultModal = new bootstrap.Modal(document.getElementById('modal-report-0'));
 let rateModal = new bootstrap.Modal(document.getElementById('modal-rate'));
 
 // Audio effects

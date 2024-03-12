@@ -94,13 +94,13 @@
 	</div>
 	<!-- Result Modal -->
 	<form
-		id="result-form"
+		id="report-form"
 		method="POST"
 	>
 		{% csrf_token %}
 		<div
 			class="modal fade"
-			id="modal-result-0"
+			id="modal-report-0"
 			data-bs-backdrop="static"
 			data-bs-keyboard="false"
 			tabindex="-1"
@@ -149,7 +149,7 @@
 						<button
 							type="button"
 							class="btn btn-primary"
-							data-bs-target="#modal-result-1"
+							data-bs-target="#modal-report-1"
 							data-bs-toggle="modal"
 						>
 							Next
@@ -159,231 +159,7 @@
 			</div>
 		</div>
 
-		<div
-			class="modal fade"
-			id="modal-result-1"
-			data-bs-backdrop="static"
-			data-bs-keyboard="false"
-			tabindex="-1"
-			aria-labelledby="modal-result-label"
-			aria-hidden="true"
-		>
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h1
-							class="modal-title fs-5"
-							id="modal-result-label"
-						>
-							Meditation Report
-						</h1>
-						<button
-							type="button"
-							class="btn-close"
-							data-bs-dismiss="modal"
-							aria-label="Close"
-						></button>
-					</div>
-					<div class="modal-body">
-						<h5 class="fw-bold mb-3">How you feel after meditation?</h5>
-						<textarea
-							class="form-control"
-							name="feeling"
-							rows="10"
-						></textarea>
-					</div>
-					<div class="modal-footer">
-						<button
-							type="button"
-							class="btn btn-secondary"
-							data-bs-target="#modal-result-0"
-							data-bs-toggle="modal"
-						>
-							Previous
-						</button>
-						<button
-							type="button"
-							class="btn btn-primary"
-							data-bs-target="#modal-result-2"
-							data-bs-toggle="modal"
-						>
-							Next
-						</button>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div
-			class="modal fade"
-			id="modal-result-2"
-			data-bs-backdrop="static"
-			data-bs-keyboard="false"
-			tabindex="-1"
-			aria-labelledby="modal-result-label"
-			aria-hidden="true"
-		>
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h1
-							class="modal-title fs-5"
-							id="modal-result-label"
-						>
-							Meditation Report
-						</h1>
-						<button
-							type="button"
-							class="btn-close"
-							data-bs-dismiss="modal"
-							aria-label="Close"
-						></button>
-					</div>
-					<div class="modal-body">
-						<h5 class="fw-bold mb-3">How do you feel in your body?</h5>
-						<textarea
-							class="form-control"
-							name="feeling_body"
-							rows="10"
-						></textarea>
-					</div>
-					<div class="modal-footer">
-						<button
-							type="button"
-							class="btn btn-secondary"
-							data-bs-target="#modal-result-1"
-							data-bs-toggle="modal"
-						>
-							Previous
-						</button>
-						<button
-							type="button"
-							class="btn btn-primary"
-							data-bs-target="#modal-result-3"
-							data-bs-toggle="modal"
-						>
-							Next
-						</button>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div
-			class="modal fade"
-			id="modal-result-3"
-			data-bs-backdrop="static"
-			data-bs-keyboard="false"
-			tabindex="-1"
-			aria-labelledby="modal-result-label"
-			aria-hidden="true"
-		>
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h1
-							class="modal-title fs-5"
-							id="modal-result-label"
-						>
-							Meditation Report
-						</h1>
-						<button
-							type="button"
-							class="btn-close"
-							data-bs-dismiss="modal"
-							aria-label="Close"
-						></button>
-					</div>
-					<div class="modal-body">
-						<h5 class="fw-bold mb-3">
-							Where, and how you feel <br />your breathing?
-						</h5>
-						<textarea
-							class="form-control"
-							name="feeling_breathe"
-							rows="10"
-						></textarea>
-					</div>
-					<div class="modal-footer">
-						<button
-							type="button"
-							class="btn btn-secondary"
-							data-bs-target="#modal-result-2"
-							data-bs-toggle="modal"
-						>
-							Previous
-						</button>
-						<button
-							type="button"
-							class="btn btn-primary"
-							data-bs-target="#modal-result-4"
-							data-bs-toggle="modal"
-						>
-							Next
-						</button>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div
-			class="modal fade"
-			id="modal-result-4"
-			data-bs-backdrop="static"
-			data-bs-keyboard="false"
-			tabindex="-1"
-			aria-labelledby="modal-result-label"
-			aria-hidden="true"
-		>
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h1
-							class="modal-title fs-5"
-							id="modal-result-label"
-						>
-							Meditation Report
-						</h1>
-						<button
-							type="button"
-							class="btn-close"
-							data-bs-dismiss="modal"
-							aria-label="Close"
-						></button>
-					</div>
-					<div class="modal-body">
-						<h5 class="fw-bold mb-3">
-							How you feel now,<br />
-							after you write all this report?
-						</h5>
-						<textarea
-							class="form-control"
-							name="feeling_breathe"
-							rows="10"
-						></textarea>
-					</div>
-					<div class="modal-footer">
-						<button
-							type="button"
-							class="btn btn-secondary"
-							data-bs-target="#modal-result-3"
-							data-bs-toggle="modal"
-						>
-							Previous
-						</button>
-						<button
-							type="submit"
-							class="btn btn-success"
-							id="saveButton"
-							form="result-form"
-							disabled="true"
-						>
-							Save
-						</button>
-					</div>
-				</div>
-			</div>
-		</div>
+		{% include "session/question.html" %}
 	</form>
 	<!-- /Result Modal -->
 </div>

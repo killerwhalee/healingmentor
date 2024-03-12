@@ -4,6 +4,8 @@ const playButton = document.getElementById("button-play");
 const progressBar = document.getElementById("progress-bar");
 const reportButton = document.getElementById("button-report");
 
+const lectureInput = document.getElementById("lecture-input");
+
 let audioElement;
 
 function updateProgressBar() {
@@ -18,13 +20,16 @@ function updateProgressBar() {
     }
 }
 
-selectElement.addEventListener("change", function () {
+selectElement.addEventListener("change", () => {
+    const selectedOption = selectElement.options[selectElement.selectedIndex];
+
+    lectureInput.value = selectedOption.value;
     reportButton.classList.add("disabled");
 });
 
 function togglePlayStop() {
     const selectedOption = selectElement.options[selectElement.selectedIndex];
-    const audioId = selectedOption.value;
+    const audioId = selectElement.selectedIndex + 1;
     audioElement = document.querySelector(`#audio-${audioId}`);
 
     if (audioElement) {
