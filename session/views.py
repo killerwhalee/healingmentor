@@ -1,25 +1,35 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.utils import timezone
-from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.core.files.base import ContentFile
 from django.core.paginator import Paginator
 
 from _config.utils import uuid_filepath
 
-from .forms import RespiratoryGraphForm, SustainedAttentionForm
-from .models import MultiplyerData, RespiratoryGraphData, SustainedAttentionData
+from .forms import (
+    RespiratoryGraphForm,
+    SustainedAttentionForm,
+    GuidedMeditationForm,
+    QuestionForm,
+)
+from .models import (
+    Multiplyer,
+    RespiratoryGraph,
+    SustainedAttention,
+    GuidedMeditation,
+    Question,
+)
 
 
 def calculate_score(user, time_input):
-    # Import MultiplyerData
+    # Import Multiplyer
     from django.core.exceptions import ObjectDoesNotExist
 
     try:
-        mul_obj = MultiplyerData.objects.get(user=user)
+        mul_obj = Multiplyer.objects.get(user=user)
     except ObjectDoesNotExist:
-        mul_obj = MultiplyerData.objects.create(user=user)
+        mul_obj = Multiplyer.objects.create(user=user)
 
     # Update Multiplyer date and amount
     from datetime import datetime, time, timedelta
@@ -80,20 +90,33 @@ def index(request):
 @login_required(login_url="common:login")
 def rg_record(request):
     if request.method == "POST":
-        form = RespiratoryGraphForm(request.POST)
+        form_data = RespiratoryGraphForm(request.POST)
+        form_question = QuestionForm(request.POST)
 
-        if form.is_valid():
+        if form_data.is_valid() and form_question.is_valid():
+            # Create new question object
+            q_obj = Question()
+
+            q_obj.question_1 = form_question.cleaned_data["question_1"]
+            q_obj.question_2 = form_question.cleaned_data["question_2"]
+            q_obj.question_3 = form_question.cleaned_data["question_3"]
+            q_obj.question_4 = form_question.cleaned_data["question_4"]
+
+            q_obj.save()
+
             # Create new data object
-            rg_obj = RespiratoryGraphData()
+            rg_obj = RespiratoryGraph()
 
             # Write user and time
             rg_obj.user = request.user
             rg_obj.date_created = timezone.now()
 
+            # Write question data
+            rg_obj.question = q_obj
+
             # Retrieve data from form
-            csv_input = form.cleaned_data["csv_input"]
-            time_input = form.cleaned_data["time_input"]
-            note_input = form.cleaned_data["note_input"]
+            csv_input = form_data.cleaned_data["csv_input"]
+            time_input = form_data.cleaned_data["time_input"]
 
             # Write CSV data
             from urllib.parse import unquote
@@ -104,17 +127,12 @@ def rg_record(request):
             # Write score data
             rg_obj.score = calculate_score(request.user, time_input)
 
-            # Write note data
-            rg_obj.note = note_input
-
             # Save into model
             rg_obj.save()
 
             return redirect("session:rg-record")
 
-    form = RespiratoryGraphForm()
-    context = {"form": form}
-    return render(request, "session/rg-record.html", context)
+    return render(request, "session/rg-record.html")
 
 
 @login_required(login_url="common:login")
@@ -126,10 +144,10 @@ def rg_inquiry(request):
 
     # Load all data if user is staff
     if request.user.is_staff:
-        raw_data_list = RespiratoryGraphData.objects.all().order_by("-date_created")
+        raw_data_list = RespiratoryGraph.objects.all().order_by("-date_created")
     # If not, load user data only
     else:
-        raw_data_list = RespiratoryGraphData.objects.filter(user=request.user).order_by(
+        raw_data_list = RespiratoryGraph.objects.filter(user=request.user).order_by(
             "-date_created"
         )
 
@@ -166,7 +184,7 @@ def rg_inquiry(request):
 
 @login_required(login_url="common:login")
 def rg_delete(request, id):
-    target_data = RespiratoryGraphData.objects.get(id=id)
+    target_data = RespiratoryGraph.objects.get(id=id)
 
     # Process delete only if user matches
     if target_data.user == request.user:
@@ -180,21 +198,34 @@ def rg_delete(request, id):
 @login_required(login_url="common:login")
 def sa_record(request):
     if request.method == "POST":
-        form = SustainedAttentionForm(request.POST)
+        form_data = SustainedAttentionForm(request.POST)
+        form_question = QuestionForm(request.POST)
 
-        if form.is_valid():
+        if form_data.is_valid() and form_question.is_valid():
+            # Create new question object
+            q_obj = Question()
+
+            q_obj.question_1 = form_question.cleaned_data["question_1"]
+            q_obj.question_2 = form_question.cleaned_data["question_2"]
+            q_obj.question_3 = form_question.cleaned_data["question_3"]
+            q_obj.question_4 = form_question.cleaned_data["question_4"]
+
+            q_obj.save()
+
             # Create new data object
-            sa_obj = SustainedAttentionData()
+            sa_obj = SustainedAttention()
 
             # Write user and time
             sa_obj.user = request.user
             sa_obj.date_created = timezone.now()
 
+            # Write question data
+            sa_obj.question = q_obj
+
             # Retrieve data from form
-            csv_input = form.cleaned_data["csv_input"]
-            rate_input = form.cleaned_data["rate_input"]
-            time_input = form.cleaned_data["time_input"]
-            note_input = form.cleaned_data["note_input"]
+            csv_input = form_data.cleaned_data["csv_input"]
+            rate_input = form_data.cleaned_data["rate_input"]
+            time_input = form_data.cleaned_data["time_input"]
 
             # Write CSV data
             from urllib.parse import unquote
@@ -208,21 +239,15 @@ def sa_record(request):
             # Write score data
             sa_obj.score = calculate_score(request.user, time_input)
 
-            # Write note data
-            sa_obj.note = note_input
-
             # Save into model
             sa_obj.save()
 
             return redirect("session:sa-record")
 
-    form = SustainedAttentionForm()
-    context = {"form": form}
-    return render(request, "session/sa-record.html", context)
+    return render(request, "session/sa-record.html")
 
 
 @login_required(login_url="common:login")
-
 def sa_inquiry(request):
     # Initial variable settings
     data_list = []
@@ -231,10 +256,10 @@ def sa_inquiry(request):
 
     # Load all data if user is staff
     if request.user.is_staff:
-        raw_data_list = SustainedAttentionData.objects.all().order_by("-date_created")
+        raw_data_list = SustainedAttention.objects.all().order_by("-date_created")
     # If not, load user data only
     else:
-        raw_data_list = SustainedAttentionData.objects.filter(user=request.user).order_by(
+        raw_data_list = SustainedAttention.objects.filter(user=request.user).order_by(
             "-date_created"
         )
 
@@ -271,7 +296,7 @@ def sa_inquiry(request):
 
 @login_required(login_url="common:login")
 def sa_delete(request, id):
-    target_data = SustainedAttentionData.objects.get(id=id)
+    target_data = SustainedAttention.objects.get(id=id)
 
     # Process delete only if user matches
     if target_data.user == request.user:
@@ -285,42 +310,40 @@ def sa_delete(request, id):
 @login_required(login_url="common:login")
 def gm_record(request):
     if request.method == "POST":
-        form = SustainedAttentionForm(request.POST)
+        form_data = GuidedMeditationForm(request.POST)
+        form_question = QuestionForm(request.POST)
 
-        if form.is_valid():
+        if form_data.is_valid() and form_question.is_valid():
+            # Create new question object
+            q_obj = Question()
+
+            q_obj.question_1 = form_question.cleaned_data["question_1"]
+            q_obj.question_2 = form_question.cleaned_data["question_2"]
+            q_obj.question_3 = form_question.cleaned_data["question_3"]
+            q_obj.question_4 = form_question.cleaned_data["question_4"]
+
+            q_obj.save()
+
             # Create new data object
-            sa_obj = SustainedAttentionData()
+            gm_obj = GuidedMeditation()
 
             # Write user and time
-            sa_obj.user = request.user
-            sa_obj.date_created = timezone.now()
+            gm_obj.user = request.user
+            gm_obj.date_created = timezone.now()
 
-            # Retrieve data from form
-            csv_input = form.cleaned_data["csv_input"]
-            rate_input = form.cleaned_data["rate_input"]
-            time_input = form.cleaned_data["time_input"]
-            note_input = form.cleaned_data["note_input"]
+            # Write question data
+            gm_obj.question = q_obj
 
-            # Write CSV data
-            from urllib.parse import unquote
-
-            file_path = uuid_filepath(sa_obj, "result.csv")
-            sa_obj.csv_data.save(file_path, ContentFile(unquote(csv_input)))
-
-            # Write rate data
-            sa_obj.rate_data = rate_input
+            # Write lecture data
+            lecture_input = form_data.cleaned_data["lecture_input"]
+            gm_obj.lecture = lecture_input
 
             # Write score data
-            sa_obj.score = calculate_score(request.user, time_input)
-
-            # Write note data
-            sa_obj.note = note_input
+            gm_obj.score = 5
 
             # Save into model
-            sa_obj.save()
+            gm_obj.save()
 
             return redirect("session:gm-record")
 
-    form = SustainedAttentionForm()
-    context = {"form": form}
-    return render(request, "session/gm-record.html", context)
+    return render(request, "session/gm-record.html")

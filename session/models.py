@@ -5,9 +5,9 @@ from _config.settings.base import MEDIA_ROOT
 from _config.utils import uuid_filepath
 
 
-class MultiplyerData(models.Model):
+class Multiplyer(models.Model):
     """
-    Multiplyer Data
+    Multiplyer
 
     Manages user tokens for score multiplying bonus time.
 
@@ -30,15 +30,33 @@ class MultiplyerData(models.Model):
     )
 
 
-class QuestionData(models.Model):
-    pass
-
-
-class GuidedMeditationData(models.Model):
+class Question(models.Model):
     """
-    Guided Meditation Data
+    Questions
 
-    Data table for Respiratory Graph
+    Applied for all session (maybe)
+
+    """
+
+    question_1 = models.TextField(
+        "",
+    )
+    question_2 = models.TextField(
+        "",
+    )
+    question_3 = models.TextField(
+        "",
+    )
+    question_4 = models.TextField(
+        "",
+    )
+
+
+class GuidedMeditation(models.Model):
+    """
+    Guided Meditation
+
+    Table for Guided Meditation
 
     """
 
@@ -47,14 +65,15 @@ class GuidedMeditationData(models.Model):
         "date created", auto_now=False, auto_now_add=True
     )
     score = models.IntegerField("recorded points", default=0)
-    note = models.TextField("user note")
+    lecture = models.CharField("lecture", max_length=50)
+    question = models.ForeignKey("session.Question", on_delete=models.CASCADE)
 
 
-class RespiratoryGraphData(models.Model):
+class RespiratoryGraph(models.Model):
     """
-    Respiratory Graph Data
+    Respiratory Graph
 
-    Data table for Respiratory Graph
+    Table for Respiratory Graph
 
     """
 
@@ -63,10 +82,10 @@ class RespiratoryGraphData(models.Model):
         "date created", auto_now=False, auto_now_add=True
     )
     csv_data = models.FileField(
-        "csv data file", upload_to=uuid_filepath, max_length=None, null=False
+        "csv  file", upload_to=uuid_filepath, max_length=None, null=False
     )
     score = models.IntegerField("recorded points", default=0)
-    note = models.TextField("user note")
+    question = models.ForeignKey("session.Question", on_delete=models.CASCADE)
 
     # Override delete() to delete connected csv file
     def delete(self, *args, **kargs):
@@ -78,11 +97,11 @@ class RespiratoryGraphData(models.Model):
         super().delete(*args, **kargs)
 
 
-class SustainedAttentionData(models.Model):
+class SustainedAttention(models.Model):
     """
-    Sustained Attention Data
+    Sustained Attention
 
-    Data table for Respiratory Data
+    Table for Sustained Attention
 
     """
 
@@ -90,12 +109,10 @@ class SustainedAttentionData(models.Model):
     date_created = models.DateTimeField(
         "date created", auto_now=False, auto_now_add=True
     )
-    csv_data = models.FileField(
-        "csv data file", upload_to=uuid_filepath, max_length=None
-    )
-    rate_data = models.JSONField("rading data", null=True)
+    csv_data = models.FileField("csv  file", upload_to=uuid_filepath, max_length=None)
+    rate_data = models.JSONField("rading ", null=True)
     score = models.IntegerField("recorded points", default=0)
-    note = models.TextField("user notes")
+    question = models.ForeignKey("session.Question", on_delete=models.CASCADE)
 
     # Override delete() to delete connected csv file
     def delete(self, *args, **kargs):
