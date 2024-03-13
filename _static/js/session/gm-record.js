@@ -28,8 +28,8 @@ selectElement.addEventListener("change", () => {
 });
 
 function togglePlayStop() {
-    const selectedOption = selectElement.options[selectElement.selectedIndex];
     const audioId = selectElement.selectedIndex + 1;
+    
     audioElement = document.querySelector(`#audio-${audioId}`);
 
     if (audioElement) {
