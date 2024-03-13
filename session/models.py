@@ -38,18 +38,10 @@ class Question(models.Model):
 
     """
 
-    question_1 = models.TextField(
-        "",
-    )
-    question_2 = models.TextField(
-        "",
-    )
-    question_3 = models.TextField(
-        "",
-    )
-    question_4 = models.TextField(
-        "",
-    )
+    question_1 = models.TextField(blank=True)
+    question_2 = models.TextField(blank=True)
+    question_3 = models.TextField(blank=True)
+    question_4 = models.TextField(blank=True)
 
 
 class GuidedMeditation(models.Model):
