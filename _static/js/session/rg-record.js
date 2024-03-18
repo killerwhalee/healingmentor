@@ -58,6 +58,8 @@ startStopButton.addEventListener("click", () => {
         // Clear previous data
         timeList.length = 0;
         valueList.length = 0;
+        recordedData.length = 0;
+        
         clockTime = new Date().getTime();
 
         audioStart.play();

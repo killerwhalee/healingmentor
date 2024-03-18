@@ -73,6 +73,7 @@ startStopButton.addEventListener("click", () => {
         // Clear previous data
         timeList.length = 0;
         valueList.length = 0;
+        recordedData.length = 0;
 
         // Set last paused time to current time
         previousTime = 0;
