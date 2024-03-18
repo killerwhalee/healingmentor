@@ -189,7 +189,7 @@ def rg_delete(request, id):
     # Process delete only if user matches
     if target_data.user == request.user:
         target_data.delete()
-        return redirect("session:rg-inquiry", request.user)
+        return redirect("session:rg-inquiry")
 
     # Respond to (403)Forbidden if user does not match
     return HttpResponse(status=403)
@@ -301,7 +301,7 @@ def sa_delete(request, id):
     # Process delete only if user matches
     if target_data.user == request.user:
         target_data.delete()
-        return redirect("session:sa-inquiry", request.user)
+        return redirect("session:sa-inquiry")
 
     # Respond to (403)Forbidden if user does not match
     return HttpResponse(status=403)
