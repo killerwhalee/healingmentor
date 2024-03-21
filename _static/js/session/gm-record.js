@@ -22,13 +22,14 @@ function updateProgressBar() {
 
 selectElement.addEventListener("change", () => {
     const selectedOption = selectElement.options[selectElement.selectedIndex];
+    console.log(selectElement.selectedIndex);
 
     lectureInput.value = selectedOption.value;
     reportButton.classList.add("disabled");
 });
 
 function togglePlayStop() {
-    const audioId = selectElement.selectedIndex + 1;
+    const audioId = selectElement.selectedIndex;
     
     audioElement = document.querySelector(`#audio-${audioId}`);
 
