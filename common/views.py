@@ -11,9 +11,6 @@ def signup(request):
     if request.method == "POST":
         form = RegisterForm(request.POST)
 
-        if not form.is_valid():
-            print(form.errors)
-
         if form.is_valid():
             # Save User Data
             form.save()
