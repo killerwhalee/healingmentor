@@ -3,13 +3,15 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
-from common.forms import RegisterForm, ProfileForm
+from common.forms import SignupForm, ProfileForm
 
 
 # Views for User Authentication
 def signup(request):
+    form = SignupForm()
+
     if request.method == "POST":
-        form = RegisterForm(request.POST)
+        form = SignupForm(request.POST)
 
         if form.is_valid():
             # Save User Data
@@ -22,8 +24,6 @@ def signup(request):
 
             login(request, user)
             return render(request, "common/signup-success.html")
-    else:
-        form = RegisterForm()
 
     context = {"form": form}
     return render(request, "common/signup.html", context)
@@ -36,7 +36,7 @@ def terms(request):
 @login_required(login_url="common:login")
 def profile(request):
     form = ProfileForm()
-    
+
     if request.method == "POST":
         form = ProfileForm(
             request.POST,
@@ -54,7 +54,7 @@ def profile(request):
 
 # Views for Downloading Media
 def download(request, path):
-    from _config.settings.base import MEDIA_ROOT
+    from healingmentor.core.settings import MEDIA_ROOT
     import os
 
     file_path = os.path.join(MEDIA_ROOT, path)
