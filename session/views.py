@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.files.base import ContentFile
 from django.core.paginator import Paginator
 
-from _config.utils import uuid_filepath
+from core.utils import uuid_filepath
 
 from .forms import (
     RespiratoryGraphForm,
@@ -157,7 +157,7 @@ def rg_inquiry(request):
     raw_data_list = paginator.get_page(page)
 
     for data in raw_data_list:
-        from _config.settings.base import MEDIA_ROOT
+        from healingmentor.core.settings import MEDIA_ROOT
         import csv
 
         csv_x_data = []

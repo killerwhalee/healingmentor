@@ -18,24 +18,27 @@ Github: https://github.com/killerwhalee/healingmentor
 
 """
 
-
 from pathlib import Path
+import os
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-SECRET_KEY = ""
+from django.core.management.utils import get_random_secret_key
+
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", get_random_secret_key())
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = False
+DEBUG = int(os.environ.get("DJANGO_DEBUG", 0))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost").split()
 
 
 # Application definition
@@ -49,7 +52,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # General Purpose Application
-    "common.apps.CommonConfig",    
+    "common.apps.CommonConfig",
     # Applications
     "home.apps.HomeConfig",
     "session.apps.SessionConfig",
@@ -65,7 +68,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "_config.urls"
+ROOT_URLCONF = "core.urls"
 
 TEMPLATES = [
     {
@@ -83,7 +86,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "_config.wsgi.application"
+WSGI_APPLICATION = "core.wsgi.application"
 
 
 # Database
@@ -94,6 +97,11 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
+
+
+# Customized User Model
+
+AUTH_USER_MODEL = "common.User"
 
 
 # Password validation
@@ -132,13 +140,14 @@ USE_TZ = False
 
 STATIC_URL = "static/"
 
+STATIC_ROOT = BASE_DIR / "_static"
+
 
 # User Media
 
-MEDIA_URL = "/media/"
+MEDIA_URL = "media/"
 
 MEDIA_ROOT = BASE_DIR / "_media"
-
 
 
 # Default primary key field type

@@ -1,9 +1,9 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 
-from _config.settings.base import MEDIA_ROOT
-from _config.utils import uuid_filepath
+from core.utils import uuid_filepath
 
+from common.models import User
 
 class Multiplyer(models.Model):
     """
@@ -84,7 +84,7 @@ class RespiratoryGraph(models.Model):
         import os
 
         if self.csv_data:
-            os.remove(os.path.join(MEDIA_ROOT, self.csv_data.path))
+            os.remove(os.path.join(settings.MEDIA_ROOT, self.csv_data.path))
 
         super().delete(*args, **kargs)
 
@@ -111,6 +111,6 @@ class SustainedAttention(models.Model):
         import os
 
         if self.csv_data:
-            os.remove(os.path.join(MEDIA_ROOT, self.csv_data.path))
+            os.remove(os.path.join(settings.MEDIA_ROOT, self.csv_data.path))
 
         super().delete(*args, **kargs)
