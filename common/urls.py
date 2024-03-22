@@ -18,7 +18,7 @@ urlpatterns = [
     path("signup", views.signup, name="signup"),
     path("terms", views.terms, name="terms"),
     # User profile
-    path("profile/<str:username>", views.profile, name="profile"),
+    path("profile", views.profile, name="profile"),
     # Download media
     path("download/<path:path>", views.download, name="download"),
     # Tests

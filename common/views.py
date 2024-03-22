@@ -1,9 +1,9 @@
-from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
+from django.shortcuts import render, redirect
 
-from django.shortcuts import render
-from .forms import RegisterForm
+from common.forms import RegisterForm, ProfileForm
 
 
 # Views for User Authentication
@@ -33,9 +33,22 @@ def terms(request):
     return render(request, "common/terms.html")
 
 
-def profile(request, username):
-    user = User.objects.get(username=username)
-    context = {"user": user}
+@login_required(login_url="common:login")
+def profile(request):
+    form = ProfileForm()
+    
+    if request.method == "POST":
+        form = ProfileForm(
+            request.POST,
+            request.FILES,
+            instance=request.user.profile,
+        )
+
+        if form.is_valid():
+            form.save()
+            return redirect("common:profile")
+
+    context = {"user": request.user, "form": form}
     return render(request, "common/profile.html", context)
 
 
@@ -51,9 +64,9 @@ def download(request, path):
 
         with open(file_path, "r", encoding="UTF-8") as file:
             response = HttpResponse(file.read())
-            response[
-                "Content-Disposition"
-            ] = f'attachment; filename="download{file_ext}"'
+            response["Content-Disposition"] = (
+                f'attachment; filename="download{file_ext}"'
+            )
             return response
 
 
