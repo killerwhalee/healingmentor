@@ -7,13 +7,13 @@ from django.core.paginator import Paginator
 
 from core.utils import uuid_filepath
 
-from .forms import (
+from session.forms import (
     RespiratoryGraphForm,
     SustainedAttentionForm,
     GuidedMeditationForm,
     QuestionForm,
 )
-from .models import (
+from session.models import (
     Multiplyer,
     RespiratoryGraph,
     SustainedAttention,
@@ -157,13 +157,13 @@ def rg_inquiry(request):
     raw_data_list = paginator.get_page(page)
 
     for data in raw_data_list:
-        from healingmentor.core.settings import MEDIA_ROOT
+        from django.conf import settings
         import csv
 
         csv_x_data = []
         csv_y_data = []
 
-        with open(f"{MEDIA_ROOT}/{data.csv_data}", "r") as file:
+        with open(f"{settings.MEDIA_ROOT}/{data.csv_data}", "r") as file:
             csv_data = csv.reader(file)
             for row in csv_data:
                 csv_x_data.append(float(row[0]))

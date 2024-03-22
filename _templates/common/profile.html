@@ -6,11 +6,11 @@
 	enctype="multipart/form-data"
 >
 	{% csrf_token %}
-	<div class="profile-img mb-3 border p-3 text-center rounded-3 bg-light">
+	<div class="d-flex flex-column align-items-center mb-3 p-3 rounded-3 border">
 		<img
 			id="profile-image"
-			src="/media/{{user.profile.image}}"
-			class="rounded-3 p-1 bg-white"
+			src="{{user.profile.image.url}}"
+			class="rounded-3"
 			width="200"
 			alt="profile image"
 		/>
@@ -29,7 +29,7 @@
 		/>
 	</div>
 
-	{% include "_form_errors.html" %}
+	{% include "_form-errors.html" %}
 
 	<div class="card rounded-3 border-0 bg-transparent">
 		<div class="card-body p-0">
@@ -63,7 +63,7 @@
 				<div class="col">
 					<button
 						type="submit"
-						class="btn btn-success"
+						class="btn btn-primary w-100"
 						form="profile-form"
 					>
 						Save Changes
