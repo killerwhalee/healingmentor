@@ -1,5 +1,38 @@
 {% extends "_base.html" %} {% block contents %}
 <h2 class="mb-3 fw-bold">Chart Records</h2>
+{% if data_list|length_is:"0" %}
+<div class="card rounded-3 mb-0">
+	<div class="card-body">
+		<div
+			class="d-flex flex-row align-items-center justify-content-around gap-2"
+		>
+			<div class="category-img">
+				<img
+					src="/static/images/no-content.png"
+					class="img-fluid"
+					width="60"
+					alt=""
+				/>
+			</div>
+			<div class="d-flex flex-column category-name gap-2">
+				<h5 class="mb-0">No content to show yet!</h5>
+				<a
+					role="button"
+					href="{% url 'session:sa-record' %}"
+					class="btn btn-outline-primary"
+					style="
+						--bs-btn-padding-y: 0.25rem;
+						--bs-btn-padding-x: 0.5rem;
+						--bs-btn-font-size: 0.75rem;
+					"
+				>
+					Create a new record
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+{% else %}
 <div class="row row-cols-1 g-3">
 	{% for data, csv_x_data, csv_y_data in data_list %}
 	<div class="col">
@@ -13,9 +46,14 @@
 							<h5 class="fw-bold">#SA-{{data.id|stringformat:"04d"}}</h5>
 						</div>
 						<div class="card-subtitle mb-2 text-body-secondary">
-							by {{data.user}}
+							by {{data.user.profile.fullname|default:data.user}} 
+							{% if data.user.profile.classname %}
+							<span class="fs-6 fst-italic">
+								Class {{data.user.profile.classname}}
+							</span>
+							{% endif %}
 						</div>
-						<p class="card-text">{{data.date_created|date:"Y-m-d G:i:s"}}</p>
+						<p class="card-text">{{data.date_created|date:"Y-m-d H:i:s"}}</p>
 						<div>
 							<button
 								type="button"
@@ -101,15 +139,26 @@
 							</div>
 							<h5 class="fw-bold mt-2">Respiration Information</h5>
 							<p>
-								User: {{data.user}}<br />
-								Date: {{data.date_created|date:"Y-m-d G:i:s"}}<br />
+								User: {{data.user.profile.fullname|default:data.user}}<br />
+								Date: {{data.date_created|date:"Y-m-d H:i:s"}}<br />
 								Length: {{csv_x_data|last|stringformat:"1d"}} seconds<br />
 								Score: {{data.score}} points
 							</p>
 							<h5 class="fw-bold mt-2">Analysis</h5>
 							<p>Not yet available</p>
-							<h5 class="fw-bold mt-2">Note</h5>
-							<p>{{data.note|default:"Nothing"}}</p>
+							<h5 class="fw-bold mt-2">Report</h5>
+							<h6 class="fw-bold">How do you feel after meditation?</h6>
+							<p>{{data.question.question_1|default:"none"}}</p>
+							<h6 class="fw-bold">What sensations do you feel in your body?</h6>
+							<p>{{data.question.question_2|default:"none"}}</p>
+							<h6 class="fw-bold">
+								Where, and how, do you feel your breathing?
+							</h6>
+							<p>{{data.question.question_3|default:"none"}}</p>
+							<h6 class="fw-bold">
+								How do you feel now, after writing this report?
+							</h6>
+							<p>{{data.question.question_4|default:"none"}}</p>
 						</div>
 						<div class="modal-footer">
 							<a
@@ -141,8 +190,9 @@
 			</div>
 		</div>
 	</div>
-	{% endfor %} {% endblock contents %} {% block scripts %}
-	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-	<script src="/static/js/session/sa-inquiry.js"></script>
-	{% endblock %}
+	{% endfor %}
 </div>
+{% endif %}{% endblock contents %} {% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/static/js/session/sa-inquiry.js"></script>
+{% endblock %}
