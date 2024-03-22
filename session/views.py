@@ -269,13 +269,13 @@ def sa_inquiry(request):
     raw_data_list = paginator.get_page(page)
 
     for data in raw_data_list:
-        from _config.settings.base import MEDIA_ROOT
+        from django.conf import settings
         import csv
 
         csv_x_data = []
         csv_y_data = []
 
-        with open(f"{MEDIA_ROOT}/{data.csv_data}", "r") as file:
+        with open(f"{settings.MEDIA_ROOT}/{data.csv_data}", "r") as file:
             csv_data = csv.reader(file)
             for row in csv_data:
                 csv_x_data.append(float(row[0]))
@@ -347,3 +347,37 @@ def gm_record(request):
             return redirect("session:gm-record")
 
     return render(request, "session/gm-record.html")
+
+
+@login_required(login_url="common:login")
+def gm_inquiry(request):
+    # Load all data if user is staff
+    if request.user.is_staff:
+        data_list = GuidedMeditation.objects.all().order_by("-date_created")
+    # If not, load user data only
+    else:
+        data_list = GuidedMeditation.objects.filter(user=request.user).order_by(
+            "-date_created"
+        )
+
+    # Paginate raw datas
+    page = request.GET.get("page", 1)
+    paginator = Paginator(data_list, 10)
+    data_list = paginator.get_page(page)
+
+    # Send context to inquiry html template
+    context = {"data_list": data_list}
+    return render(request, "session/gm-inquiry.html", context)
+
+
+@login_required(login_url="common:login")
+def gm_delete(request, id):
+    target_data = GuidedMeditation.objects.get(id=id)
+
+    # Process delete only if user matches
+    if target_data.user == request.user:
+        target_data.delete()
+        return redirect("session:gm-inquiry")
+
+    # Respond to (403)Forbidden if user does not match
+    return HttpResponse(status=403)

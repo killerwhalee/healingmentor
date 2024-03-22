@@ -1,0 +1,192 @@
+{% extends "_base.html" %} {% block contents %}
+<h2 class="mb-3 fw-bold">Chart Records</h2>
+{% if data_list|length_is:"0" %}
+<div class="card rounded-3 mb-0">
+	<div class="card-body">
+		<div
+			class="d-flex flex-row align-items-center justify-content-around gap-2"
+		>
+			<div class="category-img">
+				<img
+					src="/static/images/no-content.png"
+					class="img-fluid"
+					width="60"
+					alt=""
+				/>
+			</div>
+			<div class="d-flex flex-column category-name gap-2">
+				<h5 class="mb-0">No content to show yet!</h5>
+				<a
+					role="button"
+					href="{% url 'session:gm-record' %}"
+					class="btn btn-outline-primary"
+					style="
+						--bs-btn-padding-y: 0.25rem;
+						--bs-btn-padding-x: 0.5rem;
+						--bs-btn-font-size: 0.75rem;
+					"
+				>
+					Create a new record
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+{% else %}
+<div class="row row-cols-1 g-3">
+	{% for data in data_list %}
+	<div class="col">
+		<div class="card rounded-3">
+			<div class="card-body">
+				<div
+					class="d-flex flex-row align-items-center justify-content-between gap-1"
+				>
+					<div>
+						<div class="card-title">
+							<h5 class="fw-bold">#GM-{{data.id|stringformat:"04d"}}</h5>
+						</div>
+						<div class="card-subtitle mb-2 text-body-secondary">
+							by {{data.user.profile.fullname|default:data.user}}
+							{% if data.user.profile.classname %}
+							<span class="fs-6 fst-italic">
+								Class {{data.user.profile.classname}}
+							</span>
+							{% endif %}
+						</div>
+						<p class="card-text">{{data.date_created|date:"Y-m-d H:i:s"}}</p>
+						<div>
+							<button
+								type="button"
+								class="btn btn-primary"
+								data-bs-toggle="modal"
+								data-bs-target="#modal-{{forloop.counter}}"
+								style="
+									--bs-btn-padding-y: 0.25rem;
+									--bs-btn-padding-x: 0.5rem;
+									--bs-btn-font-size: 0.75rem;
+								"
+							>
+								Details
+							</button>
+							{% if data.user == user %}
+							<a
+								role="button"
+								href="{% url 'session:gm-delete' data.id %}"
+								class="btn btn-danger"
+								style="
+									--bs-btn-padding-y: 0.25rem;
+									--bs-btn-padding-x: 0.5rem;
+									--bs-btn-font-size: 0.75rem;
+								"
+							>
+								Delete
+							</a>
+							{% endif %}
+						</div>
+					</div>
+					<div
+						class="mx-5"
+						style="font-size: xx-large"
+					>
+						{% comment %} data goes here {% endcomment %}
+					</div>
+					<input
+						type="text"
+						id="csvInput-x-{{forloop.counter}}"
+						name="csv_input"
+						value="{{csv_x_data}}"
+						style="display: none"
+					/>
+					<input
+						type="text"
+						id="csvInput-y-{{forloop.counter}}"
+						name="csv_input"
+						value="{{csv_y_data}}"
+						style="display: none"
+					/>
+				</div>
+			</div>
+			<!-- Modal -->
+			<div
+				class="modal fade"
+				id="modal-{{forloop.counter}}"
+				data-bs-backdrop="static"
+				data-bs-keyboard="false"
+				tabindex="-1"
+				aria-labelledby="staticBackdropLabel"
+				aria-hidden="true"
+			>
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h1
+								class="modal-title fw-bold fs-5"
+								id="staticBackdropLabel"
+							>
+								Chart #GM-{{data.id|stringformat:"04d"}}
+							</h1>
+							<button
+								type="button"
+								class="btn-close"
+								data-bs-dismiss="modal"
+								aria-label="Close"
+							></button>
+						</div>
+						<div class="modal-body">
+							<h5 class="fw-bold mt-2">Guided Meditation</h5>
+							<p>
+								User: {{data.user.profile.fullname|default:data.user}}<br />
+								Date: {{data.date_created|date:"Y-m-d H:i:s"}}<br />
+								Lecture: {{data.lecture}}<br />
+								Score: {{data.score}} points
+							</p>
+							<h5 class="fw-bold mt-2">Report</h5>
+							<h6 class="fw-bold">How do you feel after meditation?</h6>
+							<p>{{data.question.question_1|default:"none"}}</p>
+							<h6 class="fw-bold">What sensations do you feel in your body?</h6>
+							<p>{{data.question.question_2|default:"none"}}</p>
+							<h6 class="fw-bold">
+								Where, and how, do you feel your breathing?
+							</h6>
+							<p>{{data.question.question_3|default:"none"}}</p>
+							<h6 class="fw-bold">
+								How do you feel now, after writing this report?
+							</h6>
+							<p>{{data.question.question_4|default:"none"}}</p>
+						</div>
+						<div class="modal-footer">
+							<a
+								class="btn btn-primary"
+								id="imageDownload-{{forloop.counter}}"
+								style="
+									--bs-btn-padding-y: 0.25rem;
+									--bs-btn-padding-x: 0.5rem;
+									--bs-btn-font-size: 0.75rem;
+								"
+							>
+								Save Chart
+							</a>
+							<button
+								type="button"
+								class="btn btn-secondary"
+								data-bs-toggle="modal"
+								style="
+									--bs-btn-padding-y: 0.25rem;
+									--bs-btn-padding-x: 0.5rem;
+									--bs-btn-font-size: 0.75rem;
+								"
+							>
+								Close
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+</div>
+{% endif %} {% endblock contents %} {% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/static/js/session/gm-inquiry.js"></script>
+{% endblock %}

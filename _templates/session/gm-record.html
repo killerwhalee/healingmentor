@@ -112,12 +112,18 @@
 
 		<div class="block">
 			<a
-				class="btn btn-primary w-100 disabled"
+				class="btn btn-primary w-100 mb-2 disabled"
 				id="button-report"
 				data-bs-toggle="modal"
 				href="#modal-report-1"
 				role="button"
 				>To journal for meditation!</a
+			>
+			<a
+				class="btn btn-secondary w-100 mb-2"
+				href="{% url 'session:gm-inquiry' %}"
+				role="button"
+				>View my recordings</a
 			>
 		</div>
 	</div>
