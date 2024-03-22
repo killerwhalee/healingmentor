@@ -19,7 +19,11 @@ Github: https://github.com/killerwhalee/healingmentor
 """
 
 from pathlib import Path
-import os
+import dotenv, os
+
+# Load Environment Variables
+
+dotenv.load_dotenv()
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -55,6 +59,7 @@ INSTALLED_APPS = [
     "common.apps.CommonConfig",
     # Applications
     "home.apps.HomeConfig",
+    "board.apps.BoardConfig",
     "session.apps.SessionConfig",
 ]
 
