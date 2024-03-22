@@ -8,14 +8,19 @@
 		<div class="hstack gap-3">
 			<div>
 				<img
-					src="{{user.userprofile.image}}"
+					src="/media/{{user.profile.image}}"
 					width="45"
 					class="rounded-3 p-1 bg-white"
 					alt=""
 				/>
 			</div>
 			<div class="details">
-				<h6 class="mb-0 text-white">Hi, {{user.username}}!</h6>
+				<h6 class="mb-0 text-white">Hi, {{user.profile.fullname}}!</h6>
+				{% if user.is_staff %}
+				<h6 class="mb-0 fw-bold text-warning">Staff Member</h6>
+				{% elif user.is_superuser %}
+				<h6 class="mb-0 fw-bold text-danger">Administrator</h6>
+				{% endif %}
 			</div>
 		</div>
 		{% else %}
@@ -60,8 +65,7 @@
 						Account
 					</a>
 					<ul>
-						<li><a href="javascript:;">View My Profile</a></li>
-						<li><a href="javascript:;">Account Settings</a></li>
+						<li><a href="{% url 'common:profile' %}">View My Profile</a></li>
 					</ul>
 				</li>
 				<li>
@@ -84,6 +88,23 @@
 						</li>
 					</ul>
 				</li>
+				{% if user.is_staff %}
+				<li>
+					<a
+						class="has-arrow"
+						href="javascript:;"
+					>
+						<i class="bi bi-clipboard-pulse me-2"></i>
+						Manage
+					</a>
+					<ul>
+						<li>
+							<a href="#">Report List</a>
+						</li>
+						<li></li>
+					</ul>
+				</li>
+				{% endif %}
 				<li>
 					<a href="javascript:;">
 						<i class="bi bi-question-circle me-2"></i>
