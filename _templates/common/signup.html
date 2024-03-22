@@ -39,7 +39,7 @@
 						method="post"
 						action="{% url 'common:signup' %}"
 					>
-						{% csrf_token %} {% include "_form_errors.html" %}
+						{% csrf_token %} {% include "_form-errors.html" %}
 						<div class="form-floating mb-3">
 							<input
 								type="text"
