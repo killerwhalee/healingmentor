@@ -8,7 +8,7 @@
 		<div class="hstack gap-3">
 			<div>
 				<img
-					src="/media/{{user.profile.image}}"
+					src="{{user.profile.image.url}}"
 					width="45"
 					class="rounded-3 p-1 bg-white"
 					alt=""
@@ -16,10 +16,10 @@
 			</div>
 			<div class="details">
 				<h6 class="mb-0 text-white">Hi, {{user.profile.fullname}}!</h6>
-				{% if user.is_staff %}
-				<h6 class="mb-0 fw-bold text-warning">Staff Member</h6>
-				{% elif user.is_superuser %}
+				{% if user.is_superuser %}
 				<h6 class="mb-0 fw-bold text-danger">Administrator</h6>
+				{% elif user.is_staff %}
+				<h6 class="mb-0 fw-bold text-warning">Staff Member</h6>
 				{% endif %}
 			</div>
 		</div>
@@ -106,9 +106,9 @@
 				</li>
 				{% endif %}
 				<li>
-					<a href="javascript:;">
-						<i class="bi bi-question-circle me-2"></i>
-						About Us
+					<a href="{% url 'home:contact-us' %}">
+						<i class="bi bi-envelope me-2"></i>
+						Contact Us
 					</a>
 				</li>
 				{% if user.is_authenticated %}
