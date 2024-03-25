@@ -188,6 +188,7 @@ def rg_delete(request, id):
 
     # Process delete only if user matches
     if target_data.user == request.user:
+        target_data.question.delete()
         target_data.delete()
         return redirect("session:rg-inquiry")
 
@@ -300,6 +301,7 @@ def sa_delete(request, id):
 
     # Process delete only if user matches
     if target_data.user == request.user:
+        target_data.question.delete()
         target_data.delete()
         return redirect("session:sa-inquiry")
 
@@ -376,6 +378,7 @@ def gm_delete(request, id):
 
     # Process delete only if user matches
     if target_data.user == request.user:
+        target_data.question.delete()
         target_data.delete()
         return redirect("session:gm-inquiry")
 
