@@ -368,7 +368,7 @@ def gm_inquiry(request):
     data_list = paginator.get_page(page)
 
     # Send context to inquiry html template
-    context = {"data_list": data_list}
+    context = {"data_list": data_list, "page_obj": data_list}
     return render(request, "session/gm-inquiry.html", context)
 
 
