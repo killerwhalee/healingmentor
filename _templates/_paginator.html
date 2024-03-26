@@ -25,7 +25,7 @@
 		<!-- /Previous Button -->
 		<!-- Page List -->
 		{% for page_number in page_obj.paginator.page_range %}
-    {% if page_number >= page_obj.number|add:-5 and page_number <= question_list.number|add:5 %}
+    {% if page_number >= page_obj.number|add:-5 and page_number <= page_obj.number|add:5 %}
     {% if page_number == page_obj.number %}
 		<li
 			class="page-item active"
@@ -45,7 +45,7 @@
 				>{{ page_number }}</a
 			>
 		</li>
-		{% endif %} {% endfor %}
+		{% endif %} {% endif %} {% endfor %}
 		<!-- /Page List -->
 		<!-- Next Button -->
 		{% if page_obj.has_next %}
