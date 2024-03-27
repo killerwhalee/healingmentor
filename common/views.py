@@ -29,10 +29,6 @@ def signup(request):
     return render(request, "common/signup.html", context)
 
 
-def terms(request):
-    return render(request, "common/terms.html")
-
-
 @login_required(login_url="common:login")
 def profile(request):
     form = ProfileForm()
@@ -71,25 +67,17 @@ def download(request, path):
 
 
 # Views for Error Handling
-def error400(request, exception):
-    return render(request, "error/400.html", {})
+def error400(request):
+    return render(request, "error/400.html")
 
 
-def error403(request, exception):
-    return render(request, "error/403.html", {})
+def error403(request):
+    return render(request, "error/403.html")
 
 
-def error404(request, exception):
-    return render(request, "error/404.html", {})
+def error404(request):
+    return render(request, "error/404.html")
 
 
 def error500(request):
-    return render(request, "error/500.html", {})
-
-
-def error502(request):
-    return render(request, "error/502.html", {})
-
-
-def error503(request):
-    return render(request, "error/503.html", {})
+    return render(request, "error/500.html")

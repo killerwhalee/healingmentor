@@ -15,3 +15,6 @@ urlpatterns = [
     # User Purpose Application
     path("session/", include("session.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler404 = "common.views.error404"
+handler500 = "common.views.error500"
