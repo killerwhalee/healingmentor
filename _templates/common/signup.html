@@ -93,7 +93,7 @@
 							></span>
 						</div>
 
-						<!-- <div class="mb-3">
+						<div class="mb-3">
 							<div class="form-check">
 								<input
 									class="form-check-input"
@@ -105,10 +105,17 @@
 									class="form-check-label"
 									for="flexCheckDefault"
 								>
-									I agree to Terms and Conditions
+									I agree to
+									<a
+										href="#terms-modal"
+										data-bs-toggle="modal"
+										data-bs-target="#terms-modal"
+									>
+										Terms and Conditions
+									</a>
 								</label>
 							</div>
-						</div> -->
+						</div>
 
 						<div class="mb-0 d-grid">
 							<button
@@ -120,6 +127,47 @@
 						</div>
 					</form>
 				</div>
+
+				<!-- Terms Modal -->
+				<div
+					class="modal fade"
+					id="terms-modal"
+					data-bs-backdrop="static"
+					data-bs-keyboard="false"
+					tabindex="-1"
+					aria-labelledby="staticBackdropLabel"
+					aria-hidden="true"
+				>
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h1
+									class="modal-title fw-bold fs-5"
+									id="staticBackdropLabel"
+								>
+									Terms and Conditions
+								</h1>
+								<button
+									type="button"
+									class="btn-close"
+									data-bs-dismiss="modal"
+									aria-label="Close"
+								></button>
+							</div>
+							<div class="modal-body">{% include "common/terms.html" %}</div>
+							<div class="modal-footer">
+								<button
+									type="button"
+									class="btn btn-secondary"
+									data-bs-toggle="modal"
+								>
+									Close
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /Terms Modal -->
 			</div>
 			<!--end to page content-->
 
