@@ -19,12 +19,7 @@
 				<a
 					role="button"
 					href="{% url 'session:gm-record' %}"
-					class="btn btn-outline-primary"
-					style="
-						--bs-btn-padding-y: 0.25rem;
-						--bs-btn-padding-x: 0.5rem;
-						--bs-btn-font-size: 0.75rem;
-					"
+					class="btn btn-sm btn-outline-primary"
 				>
 					Create a new record
 				</a>
@@ -57,14 +52,9 @@
 						<div>
 							<button
 								type="button"
-								class="btn btn-primary"
+								class="btn btn-sm btn-primary"
 								data-bs-toggle="modal"
 								data-bs-target="#modal-{{forloop.counter}}"
-								style="
-									--bs-btn-padding-y: 0.25rem;
-									--bs-btn-padding-x: 0.5rem;
-									--bs-btn-font-size: 0.75rem;
-								"
 							>
 								Details
 							</button>
@@ -72,12 +62,7 @@
 							<a
 								role="button"
 								href="{% url 'session:gm-delete' data.id %}"
-								class="btn btn-danger"
-								style="
-									--bs-btn-padding-y: 0.25rem;
-									--bs-btn-padding-x: 0.5rem;
-									--bs-btn-font-size: 0.75rem;
-								"
+								class="btn btn-sm btn-danger"
 							>
 								Delete
 							</a>
@@ -156,25 +141,15 @@
 						</div>
 						<div class="modal-footer">
 							<a
-								class="btn btn-primary"
+								class="btn btn-sm btn-primary"
 								id="imageDownload-{{forloop.counter}}"
-								style="
-									--bs-btn-padding-y: 0.25rem;
-									--bs-btn-padding-x: 0.5rem;
-									--bs-btn-font-size: 0.75rem;
-								"
 							>
 								Save Chart
 							</a>
 							<button
 								type="button"
-								class="btn btn-secondary"
+								class="btn btn-sm btn-secondary"
 								data-bs-toggle="modal"
-								style="
-									--bs-btn-padding-y: 0.25rem;
-									--bs-btn-padding-x: 0.5rem;
-									--bs-btn-font-size: 0.75rem;
-								"
 							>
 								Close
 							</button>
