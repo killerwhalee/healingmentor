@@ -16,11 +16,8 @@ urlpatterns = [
     path("logout", auth_views.LogoutView.as_view(), name="logout"),
     # Signup
     path("signup", views.signup, name="signup"),
-    path("terms", views.terms, name="terms"),
     # User profile
     path("profile", views.profile, name="profile"),
     # Download media
     path("download/<path:path>", views.download, name="download"),
-    # Tests
-    path("404", lambda _: render(_, "error/404.html")),
 ]
