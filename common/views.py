@@ -67,15 +67,15 @@ def download(request, path):
 
 
 # Views for Error Handling
-def error400(request):
+def error400(request, exception):
     return render(request, "error/400.html")
 
 
-def error403(request):
+def error403(request, exception):
     return render(request, "error/403.html")
 
 
-def error404(request):
+def error404(request, exception):
     return render(request, "error/404.html")
 
 
