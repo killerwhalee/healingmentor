@@ -3,8 +3,7 @@
 
 {% for classname, user_list in user_data.items %}
 <h6 class="fw-bold mb-3 py-2 rounded-3 px-3 bg-light text-dark">
-	{% if user.profile.classname %} Class {{ user.profile.classname }} {% else %}
-	No Class {% endif %}
+	{% if classname %} Class {{ classname }} {% else %} No Class {% endif %}
 </h6>
 {% for user in user_list %}
 <div class="card rounded-3 mb-3">
