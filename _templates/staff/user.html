@@ -1,32 +1,49 @@
 {% extends "_base.html" %} {% block contents %}
-<h2 class="mb-3">Manage User and Class</h2>
+<h2 class="mb-3 fw-bold">Manage User and Class</h2>
 
 {% for classname, user_list in user_data.items %}
-<h6 class="fw-bold mb-3 py-2 rounded-3 px-3 bg-light text-dark">
-	{% if classname %} Class {{ classname }} {% else %} No Class {% endif %}
-</h6>
-{% for user in user_list %}
-<div class="card rounded-3 mb-3">
-	<div class="card-body">
-		<div class="d-flex flex-row gap-3 align-items-start">
-			<div class="noti-box bg-transparent">
-				{% if user.profile.image %}
-				<img
-					src="{{ user.profile.image.url}}"
-					width="100%"
-				/>
-				{% else %}
-				<img
-					src="/static/images/default/profile-default.png"
-					width="100%"
-				/>
-				{% endif %}
-			</div>
-			<div>
-				<h6 class="text-dark fw-bold mb-0">{{ user.username }}</h6>
-				<p class="mb-0">{{ user.profile.fullname }}</p>
+<a
+	data-bs-toggle="collapse"
+	href="#collapseClass{{ classname }}"
+	role="button"
+	aria-expanded="false"
+>
+	<h6 class="fw-bold mb-3 py-2 rounded-3 px-3 bg-light text-dark">
+		{% if classname %} Class {{ classname }} {% else %} No Class {% endif %} 
+		({{ user_list|length }})
+	</h6>
+</a>
+<div
+	class="collapse"
+	id="collapseClass{{ classname }}"
+>
+	{% for user in user_list %}
+	<a href="{% url 'staff:session' %}?username={{ user.username }}">
+		<div class="card rounded-3 mb-3">
+			<div class="card-body">
+				<div class="d-flex flex-row gap-3 align-items-start">
+					<div class="noti-box bg-transparent">
+						{% if user.profile.image %}
+						<img
+							src="{{ user.profile.image.url}}"
+							width="100%"
+						/>
+						{% else %}
+						<img
+							src="/static/images/default/profile-default.png"
+							width="100%"
+						/>
+						{% endif %}
+					</div>
+					<div>
+						<h6 class="text-dark fw-bold mb-0">{{ user.username }}</h6>
+						<p class="mb-0">{{ user.profile.fullname }}</p>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
+	</a>
+
+	{% endfor %}
 </div>
-{% endfor %}{% endfor %} {% endblock contents %}
+{% endfor %} {% endblock contents %}
