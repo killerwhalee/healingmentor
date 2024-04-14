@@ -7,6 +7,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     # System/Root Application
     path("admin/", admin.site.urls),
+    path("staff/", include("staff.urls")),
     # Home Redirection
     path("", lambda _: redirect("home/")),
     # General Purpose Application
