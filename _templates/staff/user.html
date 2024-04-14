@@ -1,0 +1,26 @@
+{% extends "_base.html" %} {% block contents %}
+<h2 class="mb-3">Manage User and Class</h2>
+
+{% for classname, user_list in user_data.items %}
+<h6 class="fw-bold mb-3 py-2 rounded-3 px-3 bg-light text-dark">
+	{% if user.profile.classname %} Class {{ user.profile.classname }} {% else %}
+	No Class {% endif %}
+</h6>
+{% for user in user_list %}
+<div class="card rounded-3 mb-3">
+	<div class="card-body">
+		<div class="d-flex flex-row gap-3 align-items-start">
+			<div class="noti-box bg-transparent">
+				<img
+					src="{{ user.profile.image }}"
+					width="100%"
+				/>
+			</div>
+			<div>
+				<h6 class="text-dark fw-bold mb-0">{{ user.username }}</h6>
+				<p class="mb-0">{{ user.profile.fullname }}</p>
+			</div>
+		</div>
+	</div>
+</div>
+{% endfor %}{% endfor %} {% endblock contents %}

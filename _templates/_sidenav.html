@@ -90,19 +90,10 @@
 				</li>
 				{% if user.is_staff %}
 				<li>
-					<a
-						class="has-arrow"
-						href="javascript:;"
-					>
-						<i class="bi bi-clipboard-pulse me-2"></i>
-						Manage
+					<a href="{% url 'staff:index' %}">
+						<i class="bi bi-person-gear me-2"></i>
+						Staff Page
 					</a>
-					<ul>
-						<li>
-							<a href="#">Report List</a>
-						</li>
-						<li></li>
-					</ul>
 				</li>
 				{% endif %}
 				<li>
