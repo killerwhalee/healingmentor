@@ -1,0 +1,127 @@
+{% extends "_base.html" %} {% block contents %}
+<h2 class="mb-3 fw-bold">Manage Session</h2>
+
+{% for session_name, session_list in session_data.items %}
+<a
+	data-bs-toggle="collapse"
+	href="#collapseSession{{ session_name|slugify }}"
+	role="button"
+	aria-expanded="false"
+>
+	<h6 class="fw-bold mb-3 py-2 rounded-3 px-3 bg-light text-dark">
+		{{ session_name }} ({{ session_list|length }})
+	</h6>
+</a>
+<div
+	class="collapse"
+	id="collapseSession{{ session_name|slugify }}"
+>
+	{% for session in session_list %}
+	<div class="card rounded-3 mb-3">
+		<div class="card-body">
+			<div
+				class="d-flex flex-row align-items-center justify-content-between gap-1"
+			>
+				<div>
+					<div class="card-title">
+						<h5 class="fw-bold">#{{ session.id|stringformat:"04d" }}</h5>
+					</div>
+					<div class="card-subtitle mb-2 text-body-secondary">
+						by {{ session.user.profile.fullname|default:session.user }} 
+            {% if session.user.profile.classname %}
+						<span class="fs-6 fst-italic">
+							Class {{ session.user.profile.classname }}
+						</span>
+						{% endif %}
+					</div>
+					<p class="card-text">{{ session.date_created|date:"Y-m-d H:i:s" }}</p>
+					<div>
+						<button
+							type="button"
+							class="btn btn-sm btn-primary"
+							data-bs-toggle="modal"
+							data-bs-target="#modal-{{ session_name|slugify }}-{{ forloop.counter }}"
+						>
+							Details
+						</button>
+						{% if session.user == user %}
+						<a
+							role="button"
+							href="{% url 'session:gm-delete' session.id %}"
+							class="btn btn-sm btn-danger"
+						>
+							Delete
+						</a>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Modal -->
+		<div
+			class="modal fade"
+			id="modal-{{ session_name|slugify }}-{{forloop.counter}}"
+			data-bs-backdrop="static"
+			data-bs-keyboard="false"
+			tabindex="-1"
+			aria-labelledby="staticBackdropLabel"
+			aria-hidden="true"
+		>
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1
+							class="modal-title fw-bold fs-5"
+							id="staticBackdropLabel"
+						>
+							Chart #{{ session.id|stringformat:"04d" }}
+						</h1>
+						<button
+							type="button"
+							class="btn-close"
+							data-bs-dismiss="modal"
+							aria-label="Close"
+						></button>
+					</div>
+					<div class="modal-body">
+						<h5 class="fw-bold mt-2">{{ session_name }}</h5>
+						<p>
+							User: {{ session.user.profile.fullname|default:session.user }}<br />
+							Date: {{ session.date_created|date:"Y-m-d H:i:s" }}<br />
+							Lecture: {{ session.lecture }}<br />
+							Score: {{ session.score }} points
+						</p>
+						<h5 class="fw-bold mt-2">Report</h5>
+						<h6 class="fw-bold">How do you feel after meditation?</h6>
+						<p>{{ session.question.question_1|default:"none" }}</p>
+						<h6 class="fw-bold">What sensations do you feel in your body?</h6>
+						<p>{{ session.question.question_2|default:"none" }}</p>
+						<h6 class="fw-bold">Where, and how, do you feel your breathing?</h6>
+						<p>{{ session.question.question_3|default:"none" }}</p>
+						<h6 class="fw-bold">
+							How do you feel now, after writing this report?
+						</h6>
+						<p>{{ session.question.question_4|default:"none" }}</p>
+					</div>
+					<div class="modal-footer">
+						<a
+							class="btn btn-sm btn-primary"
+							id="imageDownload-{{ forloop.counter }}"
+						>
+							Save Chart
+						</a>
+						<button
+							type="button"
+							class="btn btn-sm btn-secondary"
+							data-bs-toggle="modal"
+						>
+							Close
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+</div>
+{% endfor %} {% endblock contents %}
