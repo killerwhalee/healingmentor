@@ -22,8 +22,7 @@ def user(request):
             user_data[classname] = []
 
         user_data[classname].append(user)
-    
-    print(user_data)
 
-    context = {"user_data": user_data}
+    user_data_sorted = {k: user_data[k] for k in sorted(user_data.keys())}
+    context = {"user_data": user_data_sorted}
     return render(request, "staff/user.html", context)
