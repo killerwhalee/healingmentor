@@ -11,10 +11,17 @@
 	<div class="card-body">
 		<div class="d-flex flex-row gap-3 align-items-start">
 			<div class="noti-box bg-transparent">
+				{% if user.profile.image %}
 				<img
-					src="{{ user.profile.image.url }}"
+					src="{{ user.profile.image.url}}"
 					width="100%"
 				/>
+				{% else %}
+				<img
+					src="/static/images/default/profile-default.png"
+					width="100%"
+				/>
+				{% endif %}
 			</div>
 			<div>
 				<h6 class="text-dark fw-bold mb-0">{{ user.username }}</h6>

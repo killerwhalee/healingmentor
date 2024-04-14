@@ -77,7 +77,7 @@ class Profile(models.Model):
     image = models.ImageField(
         "User Profile Image",
         upload_to=uuid_filepath,
-        default="/static/images/profile-default.png",
+        null=True,
     )
 
     fullname = models.CharField("Fullname of user", max_length=16)
