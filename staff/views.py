@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from django.contrib.admin.views.decorators import staff_member_required
 
 
@@ -37,15 +38,20 @@ def session(request):
         SustainedAttention,
     )
 
+    from urllib.parse import quote
+    import csv, codecs
+
     username = request.GET.get("username")
-    
+
     if username is None:
+        full_name = "all"
         gm_data = GuidedMeditation.objects.all()
         rg_data = RespiratoryGraph.objects.all()
         sa_data = SustainedAttention.objects.all()
-        
+
     else:
         user = User.objects.get(username=username)
+        full_name = user.profile.fullname
         gm_data = GuidedMeditation.objects.filter(user=user)
         rg_data = RespiratoryGraph.objects.filter(user=user)
         sa_data = SustainedAttention.objects.filter(user=user)
@@ -55,6 +61,49 @@ def session(request):
         "Respiratory Graph": rg_data.order_by("-date_created"),
         "Sustained Attention": sa_data.order_by("-date_created"),
     }
+
+    if request.method == "POST":
+        name = request.POST["session"]
+        query_list = session_data.get(name)
+
+        # Generate http response object
+        response = HttpResponse(content_type="text/csv")
+        response.write(codecs.BOM_UTF8)
+
+        response["Content-Disposition"] = (
+            f"attachment; filename=\"{name.replace(' ', '-')}_{quote(full_name)}.csv\""
+        )
+
+        # Create CSV writer
+        writer = csv.writer(response)
+        writer.writerow(
+            [
+                "#",
+                "Name",
+                "Date",
+                "How do you feel after meditation?",
+                "What sensations do you feel in your body?",
+                "Where, and how, do you feel your breathing?",
+                "How do you feel now, after writing this report?",
+            ]
+        )
+
+        for query in query_list:
+            pk = query.pk
+            full_name = query.user.profile.fullname
+            date_created = query.date_created
+            q = query.question
+            q1, q2, q3, q4 = (
+                q.question_1,
+                q.question_2,
+                q.question_3,
+                q.question_4,
+            )
+
+            row = [pk, full_name, date_created, q1, q2, q3, q4]
+            writer.writerow(row)
+
+        return response
 
     context = {"session_data": session_data}
     return render(request, "staff/session.html", context)
