@@ -1,6 +1,8 @@
-# Django requirements
-django
+# Django Dependancy
+django==5.0.4
 
-# Other requirements
-pillow
-gunicorn
+# Healingmentor Dependancy
+gunicorn==21.2.0
+pillow==10.2.0
+requests==2.31.0
+python-dotenv==1.0.0

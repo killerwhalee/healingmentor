@@ -7,8 +7,8 @@ urlpatterns = [
     path("", views.index, name="index"),
     # Guided Meditation
     path("gm/", views.gm_record, name="gm-record"),
-    #path("gm/inquiry", views.gm_inquiry, name="gm-inquiry"),
-    #path("gm/delete/<int:id>", views.gm_delete, name="gm-delete"),
+    path("gm/inquiry", views.gm_inquiry, name="gm-inquiry"),
+    path("gm/delete/<int:id>", views.gm_delete, name="gm-delete"),
     # Respiratory Graph
     path("rg/", views.rg_record, name="rg-record"),
     path("rg/inquiry", views.rg_inquiry, name="rg-inquiry"),

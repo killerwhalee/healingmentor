@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		{% include "_head.html" %}
+	</head>
+
+	<body>
+		<!--start wrapper-->
+		<div class="wrapper">
+			<!--start to page content-->
+			<div class="page-content mt-1">
+				<div class="card rounded-0 border-0">
+					<div class="card-body p-0">
+						<div class="text-center">
+							<img
+								class="img-fluid"
+								src="/static/images/error.png"
+								alt=""
+							/>
+						</div>
+
+						<div class="text-center my-3">
+							<h1>500</h1>
+							<h5 class="text-dark fw-bold">Ouch!</h5>
+							<p class="mb-0">
+								I think something's wrong in the server...
+							</p>
+						</div>
+						<div class="d-grid">
+							<a
+								href="/"
+								class="btn btn-dark btn-ecomm rounded-3"
+								>Go Back to Home</a
+							>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--end to page content-->
+		</div>
+		<!--end wrapper-->
+
+		<!--JS Files-->
+		{% include "_scripts.html" %}
+	</body>
+</html>

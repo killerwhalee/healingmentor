@@ -1,9 +1,9 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 
-from _config.settings.base import MEDIA_ROOT
-from _config.utils import uuid_filepath
+from core.utils import uuid_filepath
 
+from common.models import User
 
 class Multiplyer(models.Model):
     """
@@ -58,7 +58,7 @@ class GuidedMeditation(models.Model):
     )
     score = models.IntegerField("recorded points", default=0)
     lecture = models.CharField("lecture", max_length=50)
-    question = models.ForeignKey("session.Question", on_delete=models.CASCADE)
+    question = models.OneToOneField("session.Question", on_delete=models.CASCADE)
 
 
 class RespiratoryGraph(models.Model):
@@ -77,14 +77,14 @@ class RespiratoryGraph(models.Model):
         "csv  file", upload_to=uuid_filepath, max_length=None, null=False
     )
     score = models.IntegerField("recorded points", default=0)
-    question = models.ForeignKey("session.Question", on_delete=models.CASCADE)
+    question = models.OneToOneField("session.Question", on_delete=models.CASCADE)
 
     # Override delete() to delete connected csv file
     def delete(self, *args, **kargs):
         import os
 
         if self.csv_data:
-            os.remove(os.path.join(MEDIA_ROOT, self.csv_data.path))
+            os.remove(os.path.join(settings.MEDIA_ROOT, self.csv_data.path))
 
         super().delete(*args, **kargs)
 
@@ -104,13 +104,13 @@ class SustainedAttention(models.Model):
     csv_data = models.FileField("csv  file", upload_to=uuid_filepath, max_length=None)
     rate_data = models.JSONField("rading ", null=True)
     score = models.IntegerField("recorded points", default=0)
-    question = models.ForeignKey("session.Question", on_delete=models.CASCADE)
+    question = models.OneToOneField("session.Question", on_delete=models.CASCADE)
 
     # Override delete() to delete connected csv file
     def delete(self, *args, **kargs):
         import os
 
         if self.csv_data:
-            os.remove(os.path.join(MEDIA_ROOT, self.csv_data.path))
+            os.remove(os.path.join(settings.MEDIA_ROOT, self.csv_data.path))
 
         super().delete(*args, **kargs)

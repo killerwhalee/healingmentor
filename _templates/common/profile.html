@@ -1,0 +1,103 @@
+{% extends "_base.html" %}{% block contents %}
+<!--start to page content-->
+<form
+	id="profile-form"
+	method="POST"
+	enctype="multipart/form-data"
+>
+	{% csrf_token %}
+	<div class="d-flex flex-column align-items-center mb-3 p-3 rounded-3 border">
+		{% if user.profile.image %}
+		<img
+			id="profile-image"
+			src="{{user.profile.image.url}}"
+			class="rounded-3"
+			width="200"
+			alt="profile image"
+		/>
+		{% else %}
+		<img
+			id="profile-image"
+			src="/static/images/default/profile-default.png"
+			class="rounded-3"
+			width="200"
+			alt="profile image"
+		/>
+		{% endif %}
+		<label
+			class="text-decoration-underline mt-2"
+			for="input-profile-image"
+		>
+			Change Profile Image
+		</label>
+		<input
+			type="file"
+			id="input-profile-image"
+			name="image"
+			accept="image/jpeg,image/png"
+			style="display: none"
+		/>
+	</div>
+
+	{% include "_form-errors.html" %}
+
+	<div class="card rounded-3 border-0 bg-transparent">
+		<div class="card-body p-0">
+			<div class="row row-cols-1 g-3">
+				<div class="col">
+					<div class="form-floating">
+						<input
+							type="text"
+							class="form-control rounded-3"
+							id="floatingInputName"
+							name="fullname"
+							placeholder="Name"
+							value="{{user.profile.fullname}}"
+						/>
+						<label for="floatingInputName">Full Name</label>
+					</div>
+				</div>
+				<div class="col">
+					<div class="form-floating">
+						<input
+							type="text"
+							class="form-control rounded-3"
+							id="floatingInputName"
+							name="classname"
+							placeholder="Class"
+							value="{{user.profile.classname}}"
+						/>
+						<label for="floatingInputName">Class Name</label>
+					</div>
+				</div>
+				<div class="col">
+					<button
+						type="submit"
+						class="btn btn-primary w-100"
+						form="profile-form"
+					>
+						Save Changes
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+<!--end to page content-->
+{% endblock contents %} {% block scripts %}
+<script>
+	// Function to handle profile image change
+	document
+		.getElementById('input-profile-image')
+		.addEventListener('change', function (event) {
+			const file = event.target.files[0]; // Get the selected file
+			if (file) {
+				const reader = new FileReader(); // Create a new FileReader object
+				reader.onload = function (e) {
+					document.getElementById('profile-image').src = e.target.result; // Update the src attribute of the profile image
+				};
+				reader.readAsDataURL(file); // Read the file as a data URL
+			}
+		});
+</script>
+{% endblock scripts %}
