@@ -79,6 +79,7 @@ def session(request):
         writer.writerow(
             [
                 "#",
+                "Class",
                 "Name",
                 "Date",
                 "How do you feel after meditation?",
@@ -90,6 +91,7 @@ def session(request):
 
         for query in query_list:
             pk = query.pk
+            class_name = query.user.profile.classname
             full_name = query.user.profile.fullname
             date_created = query.date_created
             q = query.question
@@ -100,7 +102,7 @@ def session(request):
                 q.question_4,
             )
 
-            row = [pk, full_name, date_created, q1, q2, q3, q4]
+            row = [pk, class_name, full_name, date_created, q1, q2, q3, q4]
             writer.writerow(row)
 
         return response
