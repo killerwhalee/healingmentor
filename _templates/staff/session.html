@@ -21,6 +21,12 @@
 			{% csrf_token %}
 			<input
 				type="text"
+				name="type"
+				style="display: none"
+				value="csv"
+			/>
+			<input
+				type="text"
 				name="session"
 				style="display: none"
 				value="{{ session_name }}"

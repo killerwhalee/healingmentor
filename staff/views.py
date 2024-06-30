@@ -39,7 +39,6 @@ def session(request):
     )
 
     from urllib.parse import quote
-    import csv, codecs
 
     username = request.GET.get("username")
 
@@ -62,50 +61,57 @@ def session(request):
         "Sustained Attention": sa_data.order_by("-date_created"),
     }
 
-    if request.method == "POST":
-        name = request.POST["session"]
-        query_list = session_data.get(name)
+    if request.method != "POST":
+        context = {"session_data": session_data}
+        return render(request, "staff/session.html", context)
 
-        # Generate http response object
-        response = HttpResponse(content_type="text/csv")
-        response.write(codecs.BOM_UTF8)
+    match request.POST["type"]:
+        case "csv":
+            import csv, codecs
 
-        response["Content-Disposition"] = (
-            f"attachment; filename=\"{name.replace(' ', '-')}_{quote(full_name)}.csv\""
-        )
+            name = request.POST["session"]
+            query_list = session_data.get(name)
 
-        # Create CSV writer
-        writer = csv.writer(response)
-        writer.writerow(
-            [
-                "#",
-                "Class",
-                "Name",
-                "Date",
-                "How do you feel after meditation?",
-                "What sensations do you feel in your body?",
-                "Where, and how, do you feel your breathing?",
-                "How do you feel now, after writing this report?",
-            ]
-        )
+            # Generate http response object
+            response = HttpResponse(content_type="text/csv")
+            response.write(codecs.BOM_UTF8)
 
-        for query in query_list:
-            pk = query.pk
-            class_name = query.user.profile.classname
-            full_name = query.user.profile.fullname
-            date_created = query.date_created
-            q = query.question
-            q1, q2, q3, q4 = (
-                q.question_1,
-                q.question_2,
-                q.question_3,
-                q.question_4,
+            response["Content-Disposition"] = (
+                f"attachment; filename=\"{name.replace(' ', '-')}_{quote(full_name)}.csv\""
             )
 
-            row = [pk, class_name, full_name, date_created, q1, q2, q3, q4]
-            writer.writerow(row)
+            # Create CSV writer
+            writer = csv.writer(response)
+            writer.writerow(
+                [
+                    "#",
+                    "Class",
+                    "Name",
+                    "Date",
+                    "How do you feel after meditation?",
+                    "What sensations do you feel in your body?",
+                    "Where, and how, do you feel your breathing?",
+                    "How do you feel now, after writing this report?",
+                ]
+            )
 
-        return response
+            for query in query_list:
+                pk = query.pk
+                class_name = query.user.profile.classname
+                full_name = query.user.profile.fullname
+                date_created = query.date_created
+                q = query.question
+                q1, q2, q3, q4 = (
+                    q.question_1,
+                    q.question_2,
+                    q.question_3,
+                    q.question_4,
+                )
+
+                row = [pk, class_name, full_name, date_created, q1, q2, q3, q4]
+                writer.writerow(row)
+
+            return response
 
     context = {"session_data": session_data}
     return render(request, "staff/session.html", context)
