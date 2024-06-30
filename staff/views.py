@@ -159,3 +159,19 @@ def session(request):
             )
 
             return response
+
+        case "wordcloud":
+            name = request.POST["session"]
+            query_list = session_data.get(name)
+
+            from staff.utils.wordcloud import get_wordcloud_from_queryset
+
+            zip_buffer = get_wordcloud_from_queryset(queryset=query_list)
+
+            # Generate http response object
+            response = HttpResponse(zip_buffer, content_type="application/zip")
+            response["Content-Disposition"] = (
+                f"attachment; filename=\"{name.replace(' ', '-')}_{quote(full_name)}.zip\""
+            )
+
+            return response

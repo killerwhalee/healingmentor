@@ -62,6 +62,29 @@
 			</button>
 		</div>
 	</form>
+	<form method="post">
+		<div class="d-grid my-3">
+			{% csrf_token %}
+			<input
+				type="text"
+				name="type"
+				style="display: none"
+				value="wordcloud"
+			/>
+			<input
+				type="text"
+				name="session"
+				style="display: none"
+				value="{{ session_name }}"
+			/>
+			<button
+				class="btn btn-warning"
+				type="submit"
+			>
+				Export Wordcloud
+			</button>
+		</div>
+	</form>
 	{% for session in session_list %}
 	<div class="card rounded-3 mb-3">
 		<div class="card-body">

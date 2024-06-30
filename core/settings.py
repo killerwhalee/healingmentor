@@ -145,10 +145,7 @@ USE_TZ = False
 
 STATIC_URL = "static/"
 
-if DEBUG:
-    STATICFILES_DIRS = [BASE_DIR / "_static"]
-else:
-    STATIC_ROOT = BASE_DIR / "_static"
+STATIC_ROOT = BASE_DIR / "_static"
     
 
 

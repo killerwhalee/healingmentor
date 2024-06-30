@@ -10,3 +10,5 @@ python-dotenv==1.0.0
 # Healingmentor Wordcloud Dependancy
 matplotlib==3.9.0
 numpy==1.26.4
+konlpy==0.6.0
+wordcloud==1.9.3
