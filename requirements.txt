@@ -6,3 +6,7 @@ gunicorn==21.2.0
 pillow==10.2.0
 requests==2.31.0
 python-dotenv==1.0.0
+
+# Healingmentor Wordcloud Dependancy
+matplotlib==3.9.0
+numpy==1.26.4

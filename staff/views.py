@@ -113,5 +113,49 @@ def session(request):
 
             return response
 
-    context = {"session_data": session_data}
-    return render(request, "staff/session.html", context)
+        case "graph":
+            import io
+            import random
+            import pandas as pd
+            import matplotlib.pyplot as plt
+
+            name = request.POST["session"]
+            query_list = session_data.get(name)
+
+            datas = [
+                (
+                    f"#{query.id}",
+                    pd.read_csv(query.csv_data.path, names=["time", "value"]),
+                )
+                for query in query_list
+            ]
+
+            plt.figure(figsize=(10, 5))
+            plt.xlim(30, 60)
+            plt.grid(True, linewidth=0.5)
+
+            for _ in range(5):
+                chart_id, data = random.choice(datas)
+                plt.plot(
+                    data["time"].values,
+                    data["value"].values,
+                    linewidth=4,
+                    label=chart_id,
+                )
+
+            # Create buffer
+            buf = io.BytesIO()
+            plt.legend(loc="upper left", bbox_to_anchor=(0, -0.1), ncol=5)
+            plt.savefig(buf, format="png")
+            plt.close()
+
+            buf.seek(0)
+
+            # Generate http response object
+            response = HttpResponse(buf, content_type="image/png")
+
+            response["Content-Disposition"] = (
+                f"attachment; filename=\"{name.replace(' ', '-')}_{quote(full_name)}.png\""
+            )
+
+            return response
