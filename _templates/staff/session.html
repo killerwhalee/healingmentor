@@ -39,6 +39,7 @@
 			</button>
 		</div>
 	</form>
+	{% if session_name != "Guided Meditation" %}
 	<form method="post">
 		<div class="d-grid my-3">
 			{% csrf_token %}
@@ -62,6 +63,7 @@
 			</button>
 		</div>
 	</form>
+	{% endif %}
 	<form method="post">
 		<div class="d-grid my-3">
 			{% csrf_token %}
