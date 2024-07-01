@@ -146,7 +146,7 @@ def session(request):
             # Create buffer
             buf = io.BytesIO()
             plt.legend(loc="upper left", bbox_to_anchor=(0, -0.1), ncol=5)
-            plt.savefig(buf, format="png")
+            plt.savefig(buf, format="png", bbox_inches="tight", pad_inches=0.1)
             plt.close()
 
             buf.seek(0)
