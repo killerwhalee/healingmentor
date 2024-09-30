@@ -48,6 +48,26 @@ def profile(request):
     return render(request, "common/profile.html", context)
 
 
+# Views for Change User Password
+@login_required(login_url="common:login")
+def change_password(request):
+    from django.contrib.auth.forms import PasswordChangeForm
+    from django.contrib.auth import update_session_auth_hash
+
+    if request.method == "POST":
+        form = PasswordChangeForm(request.user, request.POST)
+
+        if form.is_valid():
+            user = form.save()  # This will update the password
+            update_session_auth_hash(request, user)
+            return redirect("common:profile")
+
+    else:
+        form = PasswordChangeForm(request.user)
+
+    return render(request, "common/change-password.html", {"form": form})
+
+
 # Views for Downloading Media
 def download(request, path):
     from healingmentor.core.settings import MEDIA_ROOT

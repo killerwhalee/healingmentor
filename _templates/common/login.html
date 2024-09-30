@@ -31,6 +31,54 @@
 
 			<!--start to page content-->
 			<div class="page-content">
+				<!-- modal -->
+				<div
+					class="modal fade"
+					id="modal-password"
+					data-bs-backdrop="static"
+					data-bs-keyboard="false"
+					tabindex="-1"
+					aria-labelledby="staticBackdropLabel"
+					aria-hidden="true"
+				>
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-body">
+								<h5 class="fw-bold mt-2">Forgot your password?</h5>
+								<p>
+									Unfortunately, there's no way to change your password without
+									signing in since we never collected your 'personal data' while
+									sign up process.
+								</p>
+								<p>
+									But, if you provide your account data(and also, proof of you
+									are the owner of the account), we can reset your password.
+									Then you can sign in to change your password in the profile
+									menu.
+								</p>
+								<p>
+									If you are currently attending class this semester, contact to
+									the TA of your class. TA will resolve this problem.
+								</p>
+								<p>
+									If you are not attending any class, contact to the developer
+									directly. Contact information is at 'Contact Us' menu.
+								</p>
+							</div>
+							<div class="modal-footer">
+								<button
+									type="button"
+									class="btn btn-sm btn-secondary"
+									data-bs-toggle="modal"
+								>
+									Close
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /modal -->
+
 				<div class="login-body">
 					<h5 class="fw-bold">Welcome Back</h5>
 					<p class="mb-0">Login to Continue</p>
@@ -39,8 +87,7 @@
 						method="post"
 						action="{% url 'common:login' %}"
 					>
-						{% csrf_token %} 
-						{% include "_form-errors.html" %}
+						{% csrf_token %} {% include "_form-errors.html" %}
 						<div class="form-floating mb-3">
 							<input
 								type="text"
@@ -89,10 +136,13 @@
 							</div>
 							<div class="">
 								<a
-									href="#"
+									href="#modal-password"
 									class="forgot-link"
-									>Forgot Password?</a
+									data-bs-toggle="modal"
+									data-bs-target="#modal-password"
 								>
+									Forgot Password?
+								</a>
 							</div>
 						</div>
 						<div class="mb-0 d-grid">

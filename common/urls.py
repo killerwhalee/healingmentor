@@ -16,6 +16,8 @@ urlpatterns = [
     path("logout", auth_views.LogoutView.as_view(), name="logout"),
     # Signup
     path("signup", views.signup, name="signup"),
+    # Change password
+    path("change-password", views.change_password, name="change-password"),
     # User profile
     path("profile", views.profile, name="profile"),
     # Download media
